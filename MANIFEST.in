@@ -1,0 +1,3 @@
+include src/dggrid/*.h
+include src/dggrid/*.hpp
+include src/dggrid/*.cpp
