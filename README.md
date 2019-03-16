@@ -1,4 +1,4 @@
-python_example
+PyDGGRID
 ==============
 
 A wrapper for DGGRID in python
@@ -18,7 +18,7 @@ Installation
 Building the documentation
 --------------------------
 
-Documentation for the example project is generated using Sphinx. Sphinx has the
+Documentation for the project is generated using Sphinx. Sphinx has the
 ability to automatically inspect the signatures and documentation strings in
 the extension module to generate beautiful documentation in a variety formats.
 The following command generates HTML-based reference documentation; for other
@@ -30,8 +30,7 @@ formats please refer to the Sphinx manual:
 License
 -------
 
-pybind11 is provided under a BSD-style license that can be found in the LICENSE
-file. By using, distributing, or contributing to this project, you agree to the
+By using, distributing, or contributing to this project, you agree to the
 terms and conditions of this license.
 
 Test call
