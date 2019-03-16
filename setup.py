@@ -24,15 +24,20 @@ class get_pybind_include(object):
         return pybind11.get_include(self.user)
 
 
-print(glob.glob('src/dggrid/*.cpp'))
+# print(glob.glob('src/dggrid/*.cpp'))
+print(get_pybind_include())
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+print(dir_path)
 ext_modules = [
     Extension(
         'pydggrid',
-        ['src/main.cpp']+glob.glob('src/dggrid/*.c')+glob.glob('src/dggrid/*.cpp'),
+        [dir_path+'/src/main.cpp']+glob.glob(dir_path+'/src/dggrid/*.c')+glob.glob(dir_path+'/src/dggrid/*.cpp'),
         include_dirs=[
-            os.path.join('src','dggrid'),
+            # os.path.join('src','dggrid'),
             # os.path.join('/home/m/pydggrid/src','dggrid'),
-            # '/home/m/pydggrid/src/dggrid',
+            # FIXME: install issue for venv
+            '/usr/local/include/python3.6',
             # Path to pybind11 headers
             get_pybind_include(),
             get_pybind_include(user=True)
@@ -101,10 +106,10 @@ class BuildExt(build_ext):
 setup(
     name='pydggrid',
     version=__version__,
-    author='Sylvain Corlay',
-    author_email='sylvain.corlay@gmail.com',
-    url='https://github.com/pybind/pydggrid',
-    description='A test project using pybind11',
+    author='Majid Hojati',
+    author_email='asd56yu@gmail.com',
+    url='https://github.com/am2222/pydggrid',
+    description='Python wrapper for DGGRID',
     long_description='',
     ext_modules=ext_modules,
     install_requires=['pybind11>=2.2'],

@@ -150,7 +150,7 @@ int geo_to_seq(double in_lon_deg,double in_lat_deg,
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(python_example, m) {
+PYBIND11_MODULE(pydggrid, m) {
     m.doc() = R"pbdoc(
         DGGRID Python3 wrapper
         -----------------------
