@@ -1,7 +1,7 @@
 #include <pybind11/pybind11.h>
 #include <iostream>
 #include "dggrid/dglib.h"
-int geo_to_seq(double in_lon_deg,double in_lat_deg,
+uint64_t geo_to_seq(double in_lon_deg,double in_lat_deg,
                  string projection= "ISEA",int aperture=3,
                  string topology= "HEXAGON",
                  double azimuth_deg=0,
