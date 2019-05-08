@@ -1,22 +1,100 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl_bind.h>
+#include <pybind11/stl.h>
+//#include <pybind11/complex.h>,
+//#include <pybind11/functional.h>
+//#include  <pybind11/chrono.h>
 #include <iostream>
 #include "dggrid/dglib.h"
-uint64_t geo_to_seq(double in_lon_deg,double in_lat_deg,
-                 string projection= "ISEA",int aperture=3,
+
+
+//parameters to save dggs structure
+dglib::DgParams params;
+
+
+bool in_array(const std::string &value, const std::vector<string> &array)
+{
+    return std::find(array.begin(), array.end(), value) != array.end();
+}
+
+//checks if params are valid or not
+//FIXME: only topology is checked here
+bool isvalid(){
+    std::vector<std::string> topologies {"HEXAGON", "DIAMOND","TRIANGLE"};
+
+    if (in_array(params.topology, topologies)) {
+        return true;
+    }
+   else{
+        throw std::invalid_argument("dgconstruct(): Topology must be set. !");
+    }
+    return false;
+}
+
+void dgconstruct(string projection= "ISEA",int aperture=3,
                  string topology= "HEXAGON",
                  double azimuth_deg=0,
                  double res=10,
-                 double pole_lon_deg=11.25,double pole_lat_deg=58.28252559) {
+                 double pole_lon_deg=11.25,double pole_lat_deg=58.28252559){
+//    dgt.~Transformer(); // destruct
+
+    params.aperture=aperture;
+    params.azimuth_deg=azimuth_deg;
+    params.pole_lat_deg=pole_lat_deg;
+    params.pole_lon_deg=pole_lon_deg;
+    params.projection=projection;
+    params.topology=topology;
+    params.res=res;
+    //new(&dgt) dglib::Transformer(pole_lon_deg, pole_lat_deg, azimuth_deg, aperture, res, topology, projection); // reconstruct
+
+}
+
+
+
+
+
+uint64_t geo_to_seq(double in_lon_deg,double in_lat_deg) {
 
 //    double in_lon_deg=35.36;
 //    double in_lat_deg=40.36;
 
 
-    dglib::Transformer dgt(pole_lon_deg, pole_lat_deg, azimuth_deg, aperture, res, topology, projection);
+//    dglib::Transformer dgt(pole_lon_deg, pole_lat_deg, azimuth_deg, aperture, res, topology, projection);
+    if(!isvalid()){
+        dgconstruct();
+    }
+
+    dglib::Transformer dgt(params);
     auto in = dgt.inGEO(in_lon_deg, in_lat_deg);
     uint64_t tout_seqnum;
     dgt.outSEQNUM(in, tout_seqnum);
     return tout_seqnum;
+
+}
+
+std::vector<uint64_t> geo_to_q2di(double in_lon_deg,double in_lat_deg) {
+
+if(!isvalid()){
+        dgconstruct();
+    }
+
+
+        dglib::Transformer dgt(params);
+        auto in = dgt.inGEO(in_lon_deg, in_lat_deg);
+        uint64_t quad;
+        long double  i;
+        long double  j;
+
+        dgt.outQ2DI(in,quad,i,j);
+
+        std::vector<uint64_t> values;
+        values.push_back(quad);
+        values.push_back(i);
+        values.push_back(j);
+        return values;//py::cast(values);
+
+
+
 
 }
 
@@ -167,10 +245,25 @@ PYBIND11_MODULE(pydggrid, m) {
     m.def("geo_to_seq", &geo_to_seq, R"pbdoc(
         convert a lat lon point into seqnum
     )pbdoc",
-     py::arg("in_lon_deg"), py::arg("in_lat_deg"),py::arg("projection")="ISEA", py::arg("aperture")=3,
+     py::arg("in_lon_deg"), py::arg("in_lat_deg"));
+
+
+    m.def("geo_to_q2di", &geo_to_q2di, R"pbdoc(
+        convert a lat lon point into q2di
+    )pbdoc",
+     py::arg("in_lon_deg"), py::arg("in_lat_deg"));
+
+
+
+
+    m.def("dgconstruct", &dgconstruct, R"pbdoc(
+        reintialize gdds object
+    )pbdoc",
+     py::arg("projection")="ISEA", py::arg("aperture")=3,
      py::arg("topology")= "HEXAGON", py::arg("azimuth_deg")=0,py::arg("res")=10, py::arg("pole_lon_deg")=11.25,
      py::arg("pole_lat_deg")=58.28252559
     );
+
 
 #ifdef VERSION_INFO
     m.attr("__version__") = VERSION_INFO;
