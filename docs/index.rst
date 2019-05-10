@@ -3,7 +3,7 @@ PyDGGRID Documentation
 
 Contents:
 
-.. toctree::
+.. ::toctree::
    :maxdepth: 2
 
    pydgrid

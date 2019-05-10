@@ -1,1 +1,1 @@
-.. automodule:: pydggrid
+.. ::automodule:: pydggrid

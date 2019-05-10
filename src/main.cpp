@@ -26,7 +26,7 @@ bool isvalid(){
         return true;
     }
    else{
-        throw std::invalid_argument("dgconstruct(): Topology must be set. !");
+        throw std::invalid_argument("dgconstruct(): Topology must be set! call dgconstruct() first and configure DGGS parametes.");
     }
     return false;
 }
@@ -48,10 +48,6 @@ void dgconstruct(string projection= "ISEA",int aperture=3,
     //new(&dgt) dglib::Transformer(pole_lon_deg, pole_lat_deg, azimuth_deg, aperture, res, topology, projection); // reconstruct
 
 }
-
-
-
-
 
 uint64_t geo_to_seq(double in_lon_deg,double in_lat_deg) {
 
@@ -93,6 +89,58 @@ if(!isvalid()){
         values.push_back(j);
         return values;//py::cast(values);
 
+
+
+
+}
+
+
+std::vector<long double> geo_to_q2dd(double in_lon_deg,double in_lat_deg) {
+
+        if(!isvalid()){
+            dgconstruct();
+        }
+
+
+        dglib::Transformer dgt(params);
+        auto in = dgt.inGEO(in_lon_deg, in_lat_deg);
+        uint64_t quad;
+        long double  qx;
+        long double  qy;
+
+        dgt.outQ2DD(in,quad,qx,qy);
+
+        std::vector<long double> values;
+        values.push_back(quad);
+        values.push_back(qx);
+        values.push_back(qy);
+        return values;//py::cast(values);
+
+
+
+}
+
+
+std::vector<long double> geo_to_projtri(double in_lon_deg,double in_lat_deg) {
+
+        if(!isvalid()){
+            dgconstruct();
+        }
+
+
+        dglib::Transformer dgt(params);
+        auto in = dgt.inGEO(in_lon_deg, in_lat_deg);
+        uint64_t tnum;
+        long double  tx;
+        long double  ty;
+
+        dgt.outPROJTRI(in,tnum,tx,ty);
+
+        std::vector<long double> values;
+        values.push_back(tnum);
+        values.push_back(tx);
+        values.push_back(ty);
+        return values;//py::cast(values);
 
 
 
@@ -249,12 +297,19 @@ PYBIND11_MODULE(pydggrid, m) {
 
 
     m.def("geo_to_q2di", &geo_to_q2di, R"pbdoc(
-        convert a lat lon point into q2di
+        convert a lat lon point into q2di; returns an array with following structure [quad,i,j]
     )pbdoc",
      py::arg("in_lon_deg"), py::arg("in_lat_deg"));
 
+    m.def("geo_to_q2dd", &geo_to_q2dd, R"pbdoc(
+        convert a lat lon point into q2dd; returns an array with following structure [quad,qx,qy]
+    )pbdoc",
+     py::arg("in_lon_deg"), py::arg("in_lat_deg"));
 
-
+    m.def("geo_to_projtri", &geo_to_projtri, R"pbdoc(
+        convert a lat lon point into projtri; returns an array with following structure [qnum,tx,ty]
+    )pbdoc",
+     py::arg("in_lon_deg"), py::arg("in_lat_deg"));
 
     m.def("dgconstruct", &dgconstruct, R"pbdoc(
         reintialize gdds object
