@@ -2,6 +2,7 @@ PyDGGRID
 ==============
 
 A wrapper for DGGRID in python
+
 Installation
 ------------
 
