@@ -32,6 +32,19 @@ m.geo_to_q2dd(50,50)
 m.geo_to_projtri(50,50)
 #[3.0, 0.5793988192307712, 0.4993911549756102]`
 ```
+
+
+
+TODO
+--------------------------
+- Add suport for lastest version of DGGRID
+- Supporting All DGGRID functions
+- Adding Boost Geometry Support
+
+
+
+
+
 Building the documentation
 --------------------------
 
@@ -43,6 +56,12 @@ formats please refer to the Sphinx manual:
 
  - `cd pydggrid/docs`
  - `make html`
+std::back_inserter(data)
+
+
+
+
+
 
 License
 -------
