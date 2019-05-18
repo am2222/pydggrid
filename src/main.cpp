@@ -6,12 +6,23 @@
 //#include  <pybind11/chrono.h>
 #include <iostream>
 #include "dggrid/dglib.h"
+#include <boost/geometry/geometries/point.hpp>
+#include <boost/geometry/geometries/polygon.hpp>
+#include <boost/geometry/io/io.hpp>
+#include <boost/geometry/geometries/adapted/c_array.hpp>
+
+
+#include "boost/geometry/extensions/gis/io/wkb/read_wkb.hpp"
+#include "boost/geometry/extensions/gis/io/wkb/utility.hpp"
+#include "boost/geometry/extensions/gis/io/wkb/write_wkb.hpp"
+
 
 
 //parameters to save dggs structure
 dglib::DgParams params;
 
-
+namespace bg = boost::geometry;
+BOOST_GEOMETRY_REGISTER_C_ARRAY_CS(cs::cartesian)
 bool in_array(const std::string &value, const std::vector<string> &array)
 {
     return std::find(array.begin(), array.end(), value) != array.end();
@@ -142,7 +153,75 @@ std::vector<long double> geo_to_projtri(double in_lon_deg,double in_lat_deg) {
         values.push_back(ty);
         return values;//py::cast(values);
 
+}
 
+std::vector<long double> geo_to_geo(double in_lon_deg,double in_lat_deg) {
+
+        if(!isvalid()){
+            dgconstruct();
+        }
+
+
+        dglib::Transformer dgt(params);
+        auto in = dgt.inGEO(in_lon_deg, in_lat_deg);
+        long double  lon_deg;
+        long double  let_deg;
+
+        dgt.outGEO(in,lon_deg,let_deg);
+
+        std::vector<long double> values;
+        values.push_back(lon_deg);
+        values.push_back(let_deg);
+        return values;//py::cast(values);
+
+}
+
+
+
+
+std::vector<long double> geo_to_plane(double in_lon_deg,double in_lat_deg) {
+
+
+
+    typedef bg::model::point<float, 2,bg::cs::cartesian> point;
+    typedef bg::model::polygon<point, false,false> polygon;
+
+    polygon p;
+    p.outer().push_back(point(1,1));
+    p.outer().push_back(point(1,2));
+    p.outer().push_back(point(2,2));
+
+    std::cout<< bg::wkt<polygon>(p)<<std::endl;
+
+
+    std::string wkb_out;
+    bg::write_wkb(p, std::back_inserter(wkb_out));
+
+    std::cout<<wkb_out;
+    std::string hex_out;
+    bg::wkb2hex(wkb_out.begin(), wkb_out.end(), hex_out) ;
+
+    boost::algorithm::to_lower(hex_out);
+    std::cout<<hex_out;
+
+
+
+
+        if(!isvalid()){
+            dgconstruct();
+        }
+
+
+        dglib::Transformer dgt(params);
+        auto in = dgt.inGEO(in_lon_deg, in_lat_deg);
+        long double  px;
+        long double  py;
+
+        dgt.outGEO(in,px,py);
+        std::vector<long double> values;
+        values.push_back(py);
+        values.push_back(py);
+        return values;//py::cast(values);
 
 }
 
@@ -306,10 +385,22 @@ PYBIND11_MODULE(pydggrid, m) {
     )pbdoc",
      py::arg("in_lon_deg"), py::arg("in_lat_deg"));
 
+
     m.def("geo_to_projtri", &geo_to_projtri, R"pbdoc(
         convert a lat lon point into projtri; returns an array with following structure [qnum,tx,ty]
     )pbdoc",
      py::arg("in_lon_deg"), py::arg("in_lat_deg"));
+
+    m.def("geo_to_geo", &geo_to_geo, R"pbdoc(
+        convert a lat lon point into GEO; returns an array with following structure [lon_deg,lat_deg]
+    )pbdoc",
+     py::arg("in_lon_deg"), py::arg("in_lat_deg"));
+
+    m.def("geo_to_plane", &geo_to_plane, R"pbdoc(
+        convert a lat lon point into PLANE; returns an array with following structure [px,py]
+    )pbdoc",
+     py::arg("in_lon_deg"), py::arg("in_lat_deg"));
+
 
     m.def("dgconstruct", &dgconstruct, R"pbdoc(
         reintialize gdds object
