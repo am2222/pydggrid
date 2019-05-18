@@ -205,8 +205,6 @@ std::vector<long double> geo_to_plane(double in_lon_deg,double in_lat_deg) {
     std::cout<<hex_out;
 
 
-
-
         if(!isvalid()){
             dgconstruct();
         }
