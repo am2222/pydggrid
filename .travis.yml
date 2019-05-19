@@ -28,7 +28,6 @@ matrix:
     env: PYTHON=3.6
   - os: linux
     env: CONDA=3.6
-
 before_install:
 - |
   if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=g++-6 CC=gcc-6;
