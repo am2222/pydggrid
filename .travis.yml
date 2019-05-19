@@ -25,7 +25,7 @@ matrix:
             - g++-6
             - boost1.67
   - os: linux
-    env: PYTHON=3.6
+    env: PYTHON=3.5
   - os: linux
     env: CONDA=3.6
 before_install:
