@@ -60,7 +60,6 @@ def has_flag(compiler, flagname):
         try:
             compiler.compile([f.name], extra_postargs=[flagname])
         except setuptools.distutils.errors.CompileError:
-            print(setuptools.distutils.errors.CompileError)
             return False
     return True
 
@@ -75,9 +74,9 @@ def cpp_flag(compiler):
     elif has_flag(compiler, '-std=c++11'):
         return '-std=c++11'
     else:
-        # raise RuntimeError('Unsupported compiler -- at least C++11 support '
-        #                    'is needed!')
-        return '-std=c++14'
+        raise RuntimeError('Unsupported compiler -- at least C++11 support '
+                           'is needed!')
+
 
 class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
