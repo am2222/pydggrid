@@ -13,7 +13,7 @@ addons:
     packages: libboost-all-dev
 before_install:
 - |
-  if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=g++-5.4 CC=gcc-5.4 CXXFLAGS = "$CXXFLAGS -std=c++14";
+  if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX=g++ CC=gcc CXXFLAGS = "$CXXFLAGS -std=c++14";
   fi
   if [ -n "$PYTHON" ]; then
     if [ "$TRAVIS_OS_NAME" = "osx" ] && [ "${PYTHON:0:1}" = "3" ]; then
