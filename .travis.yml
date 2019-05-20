@@ -4,9 +4,9 @@ sudo: true
 matrix:
   include:
   - os: linux
-    env: PYTHON=3.6,CXXFLAGS = "$CXXFLAGS -std=c++14"
+    env: PYTHON=3.6 CXX=g++-5.4 CC=gcc-5.4 CXXFLAGS = "$CXXFLAGS -std=c++14"
   - os: linux
-    env: CONDA=3.6,CXXFLAGS = "$CXXFLAGS -std=c++14"
+    env: CONDA=3.6 CXX=g++-5.4 CC=gcc-5.4 CXXFLAGS = "$CXXFLAGS -std=c++14"
 # Boost
 addons:
   apt:
