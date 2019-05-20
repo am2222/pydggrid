@@ -75,9 +75,9 @@ def cpp_flag(compiler):
     elif has_flag(compiler, '-std=c++11'):
         return '-std=c++11'
     else:
-        raise RuntimeError('Unsupported compiler -- at least C++11 support '
-                           'is needed!')
-
+        # raise RuntimeError('Unsupported compiler -- at least C++11 support '
+        #                    'is needed!')
+        return '-std=c++14'
 
 class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
