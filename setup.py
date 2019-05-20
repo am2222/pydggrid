@@ -60,6 +60,7 @@ def has_flag(compiler, flagname):
         try:
             compiler.compile([f.name], extra_postargs=[flagname])
         except setuptools.distutils.errors.CompileError:
+            print(setuptools.distutils.errors.CompileError)
             return False
     return True
 
