@@ -1,5 +1,5 @@
 language: cpp
-dist: trusty
+dist: Xenial
 matrix:
   include:
   - os: linux
@@ -23,6 +23,7 @@ before_install:
     pip install --user --upgrade pip virtualenv
     virtualenv -p python3 venv
     source venv/bin/activate
+    pip install pybind11
   elif [ -n "$CONDA" ]; then
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then OS=Linux-x86_64; else OS=MacOSX-x86_64;
     fi
