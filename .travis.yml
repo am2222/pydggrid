@@ -26,11 +26,13 @@ before_install:
   - sudo apt-get install g++-5 -y
   - sudo apt-get install python-pip python-dev build-essential
   - sudo apt-get install python3-setuptools
+  - sudo apt-get install python3-pip
   - sudo pip install --user --upgrade pip virtualenv
   - sudo pip install --user setuptools
   - sudo virtualenv -p python3 venv
   - source venv/bin/activate
   - sudo pip install pybind11
+  - sudo python3 -m pip install pybind11
 
 install:
 #- |
