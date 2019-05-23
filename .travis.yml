@@ -16,7 +16,7 @@ addons:
   apt:
     update: true
     sources:
-      -boost-latest
+      - boost-latest
     packages:
       - libboost-all-dev
       - g++-5
@@ -27,17 +27,19 @@ before_install:
   - sudo apt-get install gcc-5 -y
   - sudo apt-get install g++-5 -y
   - sudo apt-get install libboost-all-dev -y
+  - sudo apt-get install libboost-geometry-utils-perl -y
   - sudo apt-get install python-pip python-dev build-essential
   - sudo apt-get install python3-setuptools
   - sudo apt-get install python3-pip
-  - wget https://sourceforge.net/projects/boost/files/boost/1.70.0/boost_1_70_0.tar.gz
+  - wget https://sourceforge.net/projects/boost/files/boost/1.70.0/boost_1_70_0.tar.gz -P $TRAVIS_BUILD_DIR
+  - cd $TRAVIS_BUILD_DIR
   - tar -xzvf boost_1_70_0.tar.gz
   - cd boost_1_70_0
   - sudo ./bootstrap.sh --prefix=/usr/local --with-libraries=all
-  - sudo ./b2 install
-  - sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/boost.conf'
-  - sudo ldconfig
-  - cd ../../
+#  - sudo ./b2 install
+#  - sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/boost.conf'
+#  - sudo ldconfig
+#  - cd ../../
   - sudo pip install --user --upgrade pip virtualenv
   - sudo pip install --user setuptools
   - sudo virtualenv -p python3 venv
