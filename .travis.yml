@@ -31,11 +31,11 @@ before_install:
   - sudo apt-get install python-pip python-dev build-essential
   - sudo apt-get install python3-setuptools
   - sudo apt-get install python3-pip
-  - wget https://sourceforge.net/projects/boost/files/boost/1.70.0/boost_1_70_0.tar.gz -P $TRAVIS_BUILD_DIR
-  - cd $TRAVIS_BUILD_DIR
+  - wget https://sourceforge.net/projects/boost/files/boost/1.70.0/boost_1_70_0.tar.gz -P $HOME
+  - cd $HOME
   - tar -xzvf boost_1_70_0.tar.gz
-  - cd boost_1_70_0
-  - sudo ./bootstrap.sh --prefix=/usr/local --with-libraries=all
+#  - cd boost_1_70_0
+#  - sudo ./bootstrap.sh --prefix=/usr/local --with-libraries=all
 #  - sudo ./b2 install
 #  - sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/boost.conf'
 #  - sudo ldconfig
@@ -62,6 +62,7 @@ install:
 #    sudo apt-get install -qq g++-6
 #    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
     - ls $TRAVIS_BUILD_DIR
+    - ls $HOME
     - sudo python3 setup.py install
     - sudo python3 setup.py sdist
     - sudo pip install --verbose dist/*.tar.gz
