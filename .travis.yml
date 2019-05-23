@@ -47,9 +47,9 @@ before_install:
   - sudo pip install pybind11
   - sudo python3 -m pip install pybind11
   - sudo python3 -m pip install --upgrade pip
-  - cd src
-  - ls
-  - cd ../
+#  - cd src
+#  - ls
+#  - cd ../
 
 
     # Inform user that Boost 1.55 was successfully installed
