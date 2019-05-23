@@ -24,7 +24,8 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install gcc-5 -y
   - sudo apt-get install g++-5 -y
-  - sudo apt-get install python-pip python-dev build-essential 
+  - sudo apt-get install python-pip python-dev build-essential
+  - sudo apt-get install python3-setuptools
   - sudo pip install --user --upgrade pip virtualenv
   - sudo pip install --user setuptools
   - sudo virtualenv -p python3 venv
