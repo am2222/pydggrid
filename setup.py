@@ -30,6 +30,15 @@ import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 istravis = os.environ.get('TRAVIS') == 'true'
 print(dir_path)
+
+
+def get_boost_include():
+    if istravis:
+        return '/home/travis/boost_1_70_0/'
+    else:
+        return ''
+
+
 ext_modules = [
     Extension(
         'pydggrid',
@@ -39,10 +48,11 @@ ext_modules = [
             # os.path.join('/home/m/pydggrid/src','dggrid'),
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
-            '/home/travis/boost_1_70_0/',
+            # ,
             # 'C:/Boost/include/boost-1_60/',
             # Path to pybind11 headers
             get_pybind_include(),
+            get_boost_include(),
             get_pybind_include(user=True)
         ],
         library_dirs=[],

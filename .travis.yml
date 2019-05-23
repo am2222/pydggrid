@@ -71,4 +71,4 @@ install:
 #    conda install --use-local pydggrid
 #  fi
 script:
-- python tests/test.py
+- python3 tests/test.py
