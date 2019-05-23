@@ -61,7 +61,7 @@ install:
 #  if [ -n "$PYTHON" ]; then
 #    sudo apt-get install -qq g++-6
 #    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
-    - ls $TRAVIS_BUILD_DIR
+    - cd $TRAVIS_BUILD_DIR
     - ls $HOME
     - sudo python3 setup.py install
     - sudo python3 setup.py sdist
