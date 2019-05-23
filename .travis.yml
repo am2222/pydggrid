@@ -64,8 +64,8 @@ install:
     - cd $TRAVIS_BUILD_DIR
     - ls $HOME
     - sudo python3 setup.py install
-    - sudo python3 setup.py sdist
-    - sudo pip install --verbose dist/*.tar.gz
+#    - sudo python3 setup.py sdist
+#    - sudo pip install --verbose dist/*.tar.gz
 #  elif [ -n "$CONDA" ]; then
 #    conda build conda.recipe
 #    conda install --use-local pydggrid

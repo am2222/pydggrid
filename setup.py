@@ -28,6 +28,7 @@ class get_pybind_include(object):
 print(get_pybind_include())
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
+istravis = os.environ.get('TRAVIS') == 'true'
 print(dir_path)
 ext_modules = [
     Extension(
