@@ -33,13 +33,14 @@ before_install:
   - source venv/bin/activate
   - sudo pip install pybind11
   - sudo python3 -m pip install pybind11
+  - sudo python3 -m pip install --upgrade pip
 
 install:
 #- |
 #  if [ -n "$PYTHON" ]; then
 #    sudo apt-get install -qq g++-6
 #    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
-    - cd $TRAVIS_BUILD_DIR/
+    - ls $TRAVIS_BUILD_DIR
     - ls
     - sudo python3 setup.py sdist
     - sudo pip install --verbose dist/*.tar.gz
