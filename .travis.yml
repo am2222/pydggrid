@@ -30,6 +30,14 @@ before_install:
   - sudo apt-get install python-pip python-dev build-essential
   - sudo apt-get install python3-setuptools
   - sudo apt-get install python3-pip
+  - wget https://sourceforge.net/projects/boost/files/boost/1.70.0/boost_1_70_0.tar.gz
+  - tar -xzvf boost_1_70_0.tar.gz
+  - cd boost_1_70_0
+  - sudo ./bootstrap.sh --prefix=/usr/local --with-libraries=all
+  - sudo ./b2 install
+  - sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/boost.conf'
+  - sudo ldconfig
+  - cd ../../
   - sudo pip install --user --upgrade pip virtualenv
   - sudo pip install --user setuptools
   - sudo virtualenv -p python3 venv
@@ -40,6 +48,11 @@ before_install:
   - cd src
   - ls
   - cd ../
+
+
+    # Inform user that Boost 1.55 was successfully installed
+#    echo "Boost 1.55 was successfully installed."
+
 
 install:
 #- |
