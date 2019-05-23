@@ -49,7 +49,7 @@ ext_modules = [
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
             # ,
-            # 'C:/Boost/include/boost-1_60/',
+            'C:/Boost/include/boost-1_60/',
             # Path to pybind11 headers
             get_pybind_include(),
             get_boost_include(),
