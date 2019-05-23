@@ -38,7 +38,7 @@ ext_modules = [
             # os.path.join('/home/m/pydggrid/src','dggrid'),
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
-            '/usr/local/include/python3.6',
+            r'E:\Personal\Lab\Pydggrid\boost_1_60_0',
             # Path to pybind11 headers
             get_pybind_include(),
             get_pybind_include(user=True)

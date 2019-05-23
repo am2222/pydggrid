@@ -34,6 +34,9 @@ before_install:
   - sudo pip install pybind11
   - sudo python3 -m pip install pybind11
   - sudo python3 -m pip install --upgrade pip
+  - cd src
+  - ls
+  - cd ./
 
 install:
 #- |
@@ -41,7 +44,7 @@ install:
 #    sudo apt-get install -qq g++-6
 #    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
     - ls $TRAVIS_BUILD_DIR
-    - ls
+    - sudo python3 setup.py install
     - sudo python3 setup.py sdist
     - sudo pip install --verbose dist/*.tar.gz
 #  elif [ -n "$CONDA" ]; then
