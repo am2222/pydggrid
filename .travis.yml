@@ -25,6 +25,7 @@ before_install:
   - sudo apt-get install gcc-5 -y
   - sudo apt-get install g++-5 -y
   - sudo pip install --user --upgrade pip virtualenv
+  - sudo pip install setuptools
   - sudo virtualenv -p python3 venv
   - source venv/bin/activate
   - sudo pip install pybind11
