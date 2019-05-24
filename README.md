@@ -1,11 +1,17 @@
 
-[![Build Status](https://travis-ci.org/am2222/pydggrid.svg?branch=master)](https://travis-ci.org/am2222/pydggrid)
-
-
+[![Build Status](https://travis-ci.org/am2222/pydggrid.svg?branch=master)](https://travis-ci.org/am2222/pydggrid)  [![Documentation Status](https://readthedocs.org/projects/pydggrid/badge/?version=latest)](https://pydggrid.readthedocs.io/en/latest/?badge=latest)
+      
+      
 PyDGGRID
 ==============
 
 A wrapper for DGGRID in python
+
+
+### Sublime's custom image
+<p align="center">
+  <img src="https://github.com/am2222/pydggrid/blob/master/docs/L6kmP.jpg?raw=true" alt="Sublime's custom image"/>
+</p>
 
 Installation
 ------------
