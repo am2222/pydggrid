@@ -74,6 +74,7 @@ By using, distributing, or contributing to this project, you agree to the
 terms and conditions of this license.
 
 Based on Kevin Sahr's DGGRID library (https://discreteglobalgrids.org).
+
 Developed on top of the R package which was developed by Richard Barnes (https://github.com/r-barnes/dggridR/).
 
 Test call
