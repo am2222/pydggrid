@@ -1,3 +1,7 @@
+
+[![Build Status](https://travis-ci.org/am2222/pydggrid.svg?branch=master)](https://travis-ci.org/am2222/pydggrid)
+
+
 PyDGGRID
 ==============
 
@@ -56,7 +60,7 @@ formats please refer to the Sphinx manual:
 
  - `cd pydggrid/docs`
  - `make html`
-std::back_inserter(data)
+
 
 
 
