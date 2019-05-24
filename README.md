@@ -25,7 +25,7 @@ Installation
 
 **How To Use**
 In order to use this library use following example. (more updates are comming on documentations section)
-```
+```python
 #import librarry
 import pydggrid as m
 #Construct a dggs object
@@ -67,9 +67,12 @@ formats please refer to the Sphinx manual:
 
 
 
+Test call
+---------
 
-
-
+```python
+import pydggrid
+```
 
 License
 -------
@@ -80,10 +83,3 @@ terms and conditions of this license.
 Based on Kevin Sahr's DGGRID library (https://discreteglobalgrids.org).
 
 Developed on top of the R package which was developed by Richard Barnes (https://github.com/r-barnes/dggridR/).
-
-Test call
----------
-
-```python
-import pydggrid
-```
