@@ -44,10 +44,9 @@ before_install:
   - sudo pip install --user setuptools
 #  - sudo virtualenv -p python3 venv
 #  - source venv/bin/activate
-  - sudo pip install pybind11
-  - sudo python3 -m pip install pybind11
-  - sudo python3 -m pip install unittest
+#  - sudo pip install pybind11
   - sudo python3 -m pip install --upgrade pip
+  - sudo python3 -m pip install pybind11
 #  - cd src
 #  - ls
 #  - cd ../
