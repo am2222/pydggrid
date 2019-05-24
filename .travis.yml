@@ -27,7 +27,7 @@ before_install:
   - sudo apt-get install gcc-5 -y
   - sudo apt-get install g++-5 -y
   - sudo apt-get install libboost-all-dev -y
-  - sudo apt-get install libboost-geometry-utils-perl -y
+#  - sudo apt-get install libboost-geometry-utils-perl -y
   - sudo apt-get install python-pip python-dev build-essential
   - sudo apt-get install python3-setuptools
   - sudo apt-get install python3-pip
@@ -46,6 +46,7 @@ before_install:
 #  - source venv/bin/activate
   - sudo pip install pybind11
   - sudo python3 -m pip install pybind11
+  - sudo python3 -m pip install unittest
   - sudo python3 -m pip install --upgrade pip
 #  - cd src
 #  - ls
@@ -71,4 +72,5 @@ install:
 #    conda install --use-local pydggrid
 #  fi
 script:
-- python3 tests/test.py
+  - cd $TRAVIS_BUILD_DIR
+  - sudo python3 -m unittest discover
