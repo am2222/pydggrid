@@ -87,3 +87,10 @@ Test call
 ```python
 import pydggrid
 ```
+Run test
+---------
+To run all tests for the package call folowing command in package directory
+
+```
+python3 -m unittest discover
+```
