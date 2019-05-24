@@ -7,10 +7,8 @@ PyDGGRID
 
 A wrapper for DGGRID in python
 
-
-### Sublime's custom image
 <p align="center">
-  <img src="https://github.com/am2222/pydggrid/blob/master/docs/L6kmP.jpg?raw=true" alt="Sublime's custom image"/>
+  <img src="https://github.com/am2222/pydggrid/blob/master/docs/L6kmP.jpg?raw=true" alt="SPyDGGRID"/>
 </p>
 
 Installation
