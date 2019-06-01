@@ -1,3 +1,2 @@
-include src/dggrid/*.h
-include src/dggrid/*.hpp
-include src/dggrid/*.cpp
+include src/lib/shapelib/*.h
+include src/lib/shapelib/*.c

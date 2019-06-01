@@ -6,7 +6,7 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 
 class get_pybind_include(object):
@@ -26,10 +26,18 @@ class get_pybind_include(object):
 
 # print(glob.glob('src/dggrid/*.cpp'))
 print(get_pybind_include())
-import os
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 istravis = os.environ.get('TRAVIS') == 'true'
-print(dir_path)
+
+os.environ["CC"] = "g++-4.7"
+os.environ["CXX"] = "g++-4.7"
+os.environ["THEANO_FLAGS"] = 'gcc.cxxflags="-D_hypot=hypot"'
+
+print(os.path.join(dir_path,'src','lib','shapelib','\\'))
 
 
 def get_boost_include():
@@ -38,24 +46,30 @@ def get_boost_include():
     else:
         return ''
 
-
 ext_modules = [
     Extension(
         'pydggrid',
-        [dir_path+'/src/main.cpp']+glob.glob(dir_path+'/src/dggrid/*.c')+glob.glob(dir_path+'/src/dggrid/*.cpp'),
+        [os.path.join(dir_path,'src','main.cpp')]
+        +glob.glob(os.path.join(dir_path,'src','lib','dggrid','*.cpp'))
+        +glob.glob(os.path.join(dir_path,'src','lib','dglib','include','*.cpp'))
+        +glob.glob(os.path.join(dir_path,'src','lib','shapelib','include','*.c'))
+        +glob.glob(os.path.join(dir_path,'src','lib','proj4lib','include','*.cpp'))
+        +glob.glob(os.path.join(dir_path,'src','lib','*.cpp'))
+        ,
         include_dirs=[
             # os.path.join('src','dggrid'),
-            # os.path.join('/home/m/pydggrid/src','dggrid'),
+            os.path.join(dir_path,'src','lib','shapelib','include'),
+            os.path.join(dir_path,'src','lib','proj4lib','include'),
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
             # ,
-            'C:/Boost/include/boost-1_60/',
+            'E:/Personal/Lab/DGGRID/boost_1_70_0',
             # Path to pybind11 headers
             get_pybind_include(),
             get_boost_include(),
             get_pybind_include(user=True)
         ],
-        library_dirs=[],
+        library_dirs=[os.path.join(dir_path,'src','lib','shapelib'),],
         language='c++'
     ),
 ]
@@ -90,7 +104,9 @@ def cpp_flag(compiler):
         raise RuntimeError('Unsupported compiler -- at least C++11 support '
                            'is needed!')
 
+import distutils.ccompiler
 
+compiler_name = distutils.ccompiler.get_default_compiler()
 class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
     c_opts = {
@@ -104,6 +120,13 @@ class BuildExt(build_ext):
     def build_extensions(self):
         ct = self.compiler.compiler_type
         opts = self.c_opts.get(ct, [])
+
+        # if compiler_name=='mingw32':
+        print (compiler_name)
+        opts.append('-D_hypot=hypot')
+        opts.append('/w')
+        opts.append('/Y-')
+
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
             opts.append(cpp_flag(self.compiler))
@@ -123,11 +146,12 @@ setup(
     author_email='asd56yu@gmail.com',
     url='https://github.com/am2222/pydggrid',
     description='Python wrapper for DGGRID',
-    long_description='',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     ext_modules=ext_modules,
     install_requires=['pybind11>=2.2'],
     cmdclass={'build_ext': BuildExt},
     zip_safe=False,
-    test_suite='tests'
+    # test_suite='tests'
 
 )

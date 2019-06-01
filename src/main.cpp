@@ -5,7 +5,7 @@
 //#include <pybind11/functional.h>
 //#include  <pybind11/chrono.h>
 #include <iostream>
-#include "dggrid/dglib.h"
+#include "lib/dglib.h"
 #include <boost/geometry/geometries/point.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
 #include <boost/geometry/io/io.hpp>
