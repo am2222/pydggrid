@@ -1,2 +1,2 @@
-include src/lib/shapelib/*.h
-include src/lib/shapelib/*.c
+include src/*
+include README.md

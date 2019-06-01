@@ -14,6 +14,15 @@ A wrapper for DGGRID in python
 Installation
 ------------
 
+Simply use pip to install this library
+
+`pip install pydggrid`
+
+pip install . --install-option="--boost=rabbitmq"
+
+
+Build From source
+------------
 **On Unix (Linux, OS X)**
 
  - clone this repository

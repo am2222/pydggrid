@@ -32,10 +32,10 @@ build_script:
 - ps: |
     if ($env:PYTHON) {
       python setup.py sdist
-      pip install --verbose dist\pydggrid-0.0.1.tar.gz
+      pip install --verbose dist\pydggrid-0.0.4.tar.gz
     } else {
       conda build conda.recipe
-      conda install --use-local python_example
+      conda install --use-local pydggrid
     }
 test_script:
 - ps: python -m unittest discover

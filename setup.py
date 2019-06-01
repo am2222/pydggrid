@@ -6,8 +6,51 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 
-__version__ = '0.0.2'
+__version__ = '0.0.5'
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+istravis = os.environ.get('TRAVIS') == 'true'
+
+# os.environ["CC"] = "g++-4.7"
+# os.environ["CXX"] = "g++-4.7"
+# os.environ["THEANO_FLAGS"] = 'gcc.cxxflags="-D_hypot=hypot"'
+
+
+
+from setuptools.command.install import install
+def get_boost_include():
+    if istravis:
+        return '/home/travis/boost_1_70_0/'
+    else:
+        if os.name=='nt':
+            #     running on windows
+            root = 'C:/Boost/include/'
+            dirlist = [item for item in os.listdir(root) if os.path.isdir(os.path.join(root, item))]
+            for d in dirlist:
+                return os.path.join(os.path.dirname(root),d)
+
+
+
+    return ''
+
+class InstallCommand(install):
+    user_options = install.user_options + [
+        ('boost=', get_boost_include(), '<Pass Boost Installation directory>'),
+    ]
+
+    def initialize_options(self):
+        install.initialize_options(self)
+        # self.boost = get_boost_include()
+
+    def finalize_options(self):
+        print("value of boost is", self.boost)
+        install.finalize_options(self)
+
+    def run(self):
+        print(self.boost)
+        # TODO:here we must check for boost dir and if does not exist rise error
+        print(install.ext_modules)
+        install.run(self)
 
 class get_pybind_include(object):
     """Helper class to determine the pybind11 include path
@@ -24,42 +67,27 @@ class get_pybind_include(object):
         return pybind11.get_include(self.user)
 
 
-# print(glob.glob('src/dggrid/*.cpp'))
-print(get_pybind_include())
+
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
-istravis = os.environ.get('TRAVIS') == 'true'
 
-os.environ["CC"] = "g++-4.7"
-os.environ["CXX"] = "g++-4.7"
-os.environ["THEANO_FLAGS"] = 'gcc.cxxflags="-D_hypot=hypot"'
-
-print(os.path.join(dir_path,'src','lib','shapelib','\\'))
-
-
-def get_boost_include():
-    if istravis:
-        return '/home/travis/boost_1_70_0/'
-    else:
-        return ''
 
 ext_modules = [
     Extension(
         'pydggrid',
-        [os.path.join(dir_path,'src','main.cpp')]
-        +glob.glob(os.path.join(dir_path,'src','lib','dggrid','*.cpp'))
-        +glob.glob(os.path.join(dir_path,'src','lib','dglib','include','*.cpp'))
-        +glob.glob(os.path.join(dir_path,'src','lib','shapelib','include','*.c'))
-        +glob.glob(os.path.join(dir_path,'src','lib','proj4lib','include','*.cpp'))
-        +glob.glob(os.path.join(dir_path,'src','lib','*.cpp'))
+        [os.path.join(dir_path, 'src', 'main.cpp')]
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'dggrid', '*.cpp'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'dglib', 'include', '*.cpp'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include', '*.c'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include', '*.cpp'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', '*.cpp'))
         ,
         include_dirs=[
             # os.path.join('src','dggrid'),
-            os.path.join(dir_path,'src','lib','shapelib','include'),
-            os.path.join(dir_path,'src','lib','proj4lib','include'),
+            os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include'),
+            os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include'),
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
             # ,
@@ -69,7 +97,7 @@ ext_modules = [
             get_boost_include(),
             get_pybind_include(user=True)
         ],
-        library_dirs=[os.path.join(dir_path,'src','lib','shapelib'),],
+        library_dirs=[os.path.join(dir_path, 'src', 'lib', 'shapelib'), ],
         language='c++'
     ),
 ]
@@ -104,9 +132,12 @@ def cpp_flag(compiler):
         raise RuntimeError('Unsupported compiler -- at least C++11 support '
                            'is needed!')
 
+
 import distutils.ccompiler
 
 compiler_name = distutils.ccompiler.get_default_compiler()
+
+
 class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
     c_opts = {
@@ -150,8 +181,15 @@ setup(
     long_description_content_type="text/markdown",
     ext_modules=ext_modules,
     install_requires=['pybind11>=2.2'],
-    cmdclass={'build_ext': BuildExt},
+    cmdclass={'build_ext': BuildExt,'install': InstallCommand},
     zip_safe=False,
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'License :: OSI Approved :: Academic Free License (AFL)',
+        'Programming Language :: C++ ',
+        'Topic :: Scientific/Engineering :: GIS',
+    ],
+    keywords='GIS, DGGS'
     # test_suite='tests'
 
 )
