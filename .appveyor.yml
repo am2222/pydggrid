@@ -33,10 +33,9 @@ build_script:
     if ($env:PYTHON) {
 
       set "boost_dir=C:\Libraries\boost_1_69_0\"
-      python setup.py install
       python setup.py sdist
       set "boost_dir=C:\Libraries\boost_1_69_0\"
-      pip install --verbose dist\pydggrid-0.0.5.tar.gz
+      pip install --verbose dist\pydggrid-0.0.6.tar.gz
     } else {
       conda build conda.recipe
       conda install --use-local pydggrid
