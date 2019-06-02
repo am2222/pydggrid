@@ -79,8 +79,8 @@ ext_modules = [
         ,
         include_dirs=[
             # os.path.join('src','dggrid'),
-            # os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include'),
-            # os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include'),
+            os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include'),
+            os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include'),
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
             # ,
