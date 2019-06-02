@@ -31,7 +31,7 @@ install:
 build_script:
 - ps: |
     if ($env:PYTHON) {
-
+      $env:boost_dir="C:\Libraries\boost_1_69_0\"
       set "boost_dir=C:\Libraries\boost_1_69_0\"
       python setup.py sdist
       set "boost_dir=C:\Libraries\boost_1_69_0\"
