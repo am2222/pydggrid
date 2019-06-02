@@ -147,9 +147,7 @@ class BuildExt(build_ext):
 
         # if compiler_name=='mingw32':
         print (compiler_name)
-        opts.append('-D_hypot=hypot')
-        opts.append('/w')
-        opts.append('/Y-')
+
 
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
@@ -158,6 +156,9 @@ class BuildExt(build_ext):
                 opts.append('-fvisibility=hidden')
         elif ct == 'msvc':
             opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
+            opts.append('-D_hypot=hypot')
+            opts.append('/w')
+            opts.append('/Y-')
         for ext in self.extensions:
             ext.extra_compile_args = opts
         build_ext.build_extensions(self)
