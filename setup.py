@@ -11,6 +11,17 @@ __version__ = '0.0.5'
 dir_path = os.path.dirname(os.path.realpath(__file__))
 istravis = os.environ.get('TRAVIS') == 'true'
 
+
+boost_directory = 'boost_dir'
+boost_directory_value = os.environ.get( boost_directory, None )
+
+if boost_directory_value is not None:
+    sys.stderr.write( "Using '%s=%s' environment variable!\n" % (
+            boost_directory, boost_directory_value ) )
+else:
+    raise RuntimeError('Please specify Boost directory. It must be defined as '
+                       'boost_dir=/home/usr/include/boost/ pip install pydggrid on Linux systems '
+                       'and set "boost_dir=C:/Boost/include/" && pip install. The boost version must be higher than boost 1.70.0')
 # os.environ["CC"] = "g++-4.7"
 # os.environ["CXX"] = "g++-4.7"
 # os.environ["THEANO_FLAGS"] = 'gcc.cxxflags="-D_hypot=hypot"'
@@ -22,35 +33,17 @@ def get_boost_include():
     if istravis:
         return '/home/travis/boost_1_70_0/'
     else:
-        if os.name=='nt':
-            #     running on windows
-            root = 'C:/Boost/include/'
-            dirlist = [item for item in os.listdir(root) if os.path.isdir(os.path.join(root, item))]
-            for d in dirlist:
-                return os.path.join(os.path.dirname(root),d)
-
+        # if os.name=='nt':
+        #     #     running on windows
+        #     root = 'C:/Boost/include/'
+        #     dirlist = [item for item in os.listdir(root) if os.path.isdir(os.path.join(root, item))]
+        #     for d in dirlist:
+        #         return os.path.join(os.path.dirname(root),d)
+        return boost_directory_value
 
 
     return ''
 
-class InstallCommand(install):
-    user_options = install.user_options + [
-        ('boost=', get_boost_include(), '<Pass Boost Installation directory>'),
-    ]
-
-    def initialize_options(self):
-        install.initialize_options(self)
-        # self.boost = get_boost_include()
-
-    def finalize_options(self):
-        print("value of boost is", self.boost)
-        install.finalize_options(self)
-
-    def run(self):
-        print(self.boost)
-        # TODO:here we must check for boost dir and if does not exist rise error
-        print(install.ext_modules)
-        install.run(self)
 
 class get_pybind_include(object):
     """Helper class to determine the pybind11 include path
@@ -86,18 +79,18 @@ ext_modules = [
         ,
         include_dirs=[
             # os.path.join('src','dggrid'),
-            os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include'),
-            os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include'),
+            # os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include'),
+            # os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include'),
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
             # ,
-            'E:/Personal/Lab/DGGRID/boost_1_70_0',
+            # 'E:/Personal/Lab/DGGRID/boost_1_70_0',
             # Path to pybind11 headers
             get_pybind_include(),
             get_boost_include(),
             get_pybind_include(user=True)
         ],
-        library_dirs=[os.path.join(dir_path, 'src', 'lib', 'shapelib'), ],
+        library_dirs=[],
         language='c++'
     ),
 ]
@@ -181,7 +174,7 @@ setup(
     long_description_content_type="text/markdown",
     ext_modules=ext_modules,
     install_requires=['pybind11>=2.2'],
-    cmdclass={'build_ext': BuildExt,'install': InstallCommand},
+    cmdclass={'build_ext': BuildExt},
     zip_safe=False,
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
