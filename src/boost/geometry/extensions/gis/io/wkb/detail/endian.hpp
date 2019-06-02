@@ -26,7 +26,7 @@
 #include <boost/config.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/static_assert.hpp>
-#include <boost/detail/endian.hpp>
+#include <boost/predef/other/endian.h>
 #include <boost/type_traits/is_signed.hpp>
 
 #if CHAR_BIT != 8

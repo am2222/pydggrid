@@ -6,7 +6,43 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 
-__version__ = '0.0.1'
+__version__ = '0.0.5'
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+istravis = os.environ.get('TRAVIS') == 'true'
+
+
+boost_directory = 'boost_dir'
+boost_directory_value = os.environ.get( boost_directory, None )
+
+if boost_directory_value is not None or istravis:
+    sys.stderr.write( "Using '%s=%s' environment variable!\n" % (
+            boost_directory, boost_directory_value ) )
+else:
+    raise RuntimeError('Please specify Boost directory. It must be defined as '
+                       'boost_dir=/home/usr/include/boost/ pip install pydggrid on Linux systems '
+                       'and set "boost_dir=C:/Boost/include/" && pip install. The boost version must be higher than boost 1.70.0')
+# os.environ["CC"] = "g++-4.7"
+# os.environ["CXX"] = "g++-4.7"
+# os.environ["THEANO_FLAGS"] = 'gcc.cxxflags="-D_hypot=hypot"'
+
+
+
+from setuptools.command.install import install
+def get_boost_include():
+    if istravis:
+        return '/home/travis/boost_1_70_0/'
+    else:
+        # if os.name=='nt':
+        #     #     running on windows
+        #     root = 'C:/Boost/include/'
+        #     dirlist = [item for item in os.listdir(root) if os.path.isdir(os.path.join(root, item))]
+        #     for d in dirlist:
+        #         return os.path.join(os.path.dirname(root),d)
+        return boost_directory_value
+
+
+    return ''
 
 
 class get_pybind_include(object):
@@ -24,32 +60,31 @@ class get_pybind_include(object):
         return pybind11.get_include(self.user)
 
 
-# print(glob.glob('src/dggrid/*.cpp'))
-print(get_pybind_include())
-import os
-dir_path = os.path.dirname(os.path.realpath(__file__))
-istravis = os.environ.get('TRAVIS') == 'true'
-print(dir_path)
 
 
-def get_boost_include():
-    if istravis:
-        return '/home/travis/boost_1_70_0/'
-    else:
-        return ''
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 
 
 ext_modules = [
     Extension(
         'pydggrid',
-        [dir_path+'/src/main.cpp']+glob.glob(dir_path+'/src/dggrid/*.c')+glob.glob(dir_path+'/src/dggrid/*.cpp'),
+        [os.path.join(dir_path, 'src', 'main.cpp')]
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'dggrid', '*.cpp'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'dglib', 'include', '*.cpp'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include', '*.c'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include', '*.cpp'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib', '*.cpp'))
+        ,
         include_dirs=[
             # os.path.join('src','dggrid'),
-            # os.path.join('/home/m/pydggrid/src','dggrid'),
+            os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include'),
+            os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include'),
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
             # ,
-            'C:/Boost/include/boost-1_60/',
+            # 'E:/Personal/Lab/DGGRID/boost_1_70_0',
             # Path to pybind11 headers
             get_pybind_include(),
             get_boost_include(),
@@ -91,6 +126,11 @@ def cpp_flag(compiler):
                            'is needed!')
 
 
+import distutils.ccompiler
+
+compiler_name = distutils.ccompiler.get_default_compiler()
+
+
 class BuildExt(build_ext):
     """A custom build extension for adding compiler-specific options."""
     c_opts = {
@@ -104,13 +144,25 @@ class BuildExt(build_ext):
     def build_extensions(self):
         ct = self.compiler.compiler_type
         opts = self.c_opts.get(ct, [])
+
+        # if compiler_name=='mingw32':
+        # print (compiler_name)
+
+
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
             opts.append(cpp_flag(self.compiler))
+            # Add Wno-unknown-pragmas
+            # pragma warning(suppress : 4996)
+            opts.append('-Wno-unknown-pragmas')
+
             if has_flag(self.compiler, '-fvisibility=hidden'):
                 opts.append('-fvisibility=hidden')
         elif ct == 'msvc':
             opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
+            opts.append('-D_hypot=hypot')
+            opts.append('/w')
+            opts.append('/Y-')
         for ext in self.extensions:
             ext.extra_compile_args = opts
         build_ext.build_extensions(self)
@@ -123,11 +175,19 @@ setup(
     author_email='asd56yu@gmail.com',
     url='https://github.com/am2222/pydggrid',
     description='Python wrapper for DGGRID',
-    long_description='',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     ext_modules=ext_modules,
     install_requires=['pybind11>=2.2'],
     cmdclass={'build_ext': BuildExt},
     zip_safe=False,
-    test_suite='tests'
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'License :: OSI Approved :: Academic Free License (AFL)',
+        'Programming Language :: C++ ',
+        'Topic :: Scientific/Engineering :: GIS',
+    ],
+    keywords='GIS, DGGS'
+    # test_suite='tests'
 
 )

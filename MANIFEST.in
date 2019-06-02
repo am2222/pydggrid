@@ -1,3 +1,2 @@
-include src/dggrid/*.h
-include src/dggrid/*.hpp
-include src/dggrid/*.cpp
+include src/*
+include README.md

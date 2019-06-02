@@ -14,6 +14,15 @@ A wrapper for DGGRID in python
 Installation
 ------------
 
+Simply use pip to install this library
+
+`pip install pydggrid`
+
+pip install . --install-option="--boost=rabbitmq"
+
+
+Build From source
+------------
 **On Unix (Linux, OS X)**
 
  - clone this repository
@@ -83,4 +92,3 @@ terms and conditions of this license.
 Based on Kevin Sahr's DGGRID library (https://discreteglobalgrids.org).
 
 Developed on top of the R package which was developed by Richard Barnes (https://github.com/r-barnes/dggridR/).
-

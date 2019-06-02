@@ -7,7 +7,7 @@ import unittest
 class Test(unittest.TestCase):
     def test_version(self):
         # assert m.__version__ ==
-        self.assertEqual(m.__version__, '0.0.1')
+        self.assertEqual(m.__version__, '0.0.5')
     def test_dgg_cunstruct(self):
         m.dgconstruct()
 
