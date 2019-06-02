@@ -15,7 +15,7 @@ istravis = os.environ.get('TRAVIS') == 'true'
 boost_directory = 'boost_dir'
 boost_directory_value = os.environ.get( boost_directory, None )
 
-if boost_directory_value is not None:
+if boost_directory_value is not None or istravis:
     sys.stderr.write( "Using '%s=%s' environment variable!\n" % (
             boost_directory, boost_directory_value ) )
 else:
