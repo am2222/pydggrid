@@ -35,6 +35,7 @@
 #include "DgUtil.h"
 
 using namespace std;
+ #pragma warning(suppress : 4996)
 
 class DgConverterBase;
 class DgLocation;

@@ -146,12 +146,16 @@ class BuildExt(build_ext):
         opts = self.c_opts.get(ct, [])
 
         # if compiler_name=='mingw32':
-        print (compiler_name)
+        # print (compiler_name)
 
 
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
             opts.append(cpp_flag(self.compiler))
+            # Add Wno-unknown-pragmas
+            # pragma warning(suppress : 4996)
+            opts.append('-Wno-unknown-pragmas')
+
             if has_flag(self.compiler, '-fvisibility=hidden'):
                 opts.append('-fvisibility=hidden')
         elif ct == 'msvc':
