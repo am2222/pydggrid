@@ -1,6 +1,5 @@
 
-[![Build Status](https://travis-ci.org/am2222/pydggrid.svg?branch=master)](https://travis-ci.org/am2222/pydggrid)  [![Documentation Status](https://readthedocs.org/projects/pydggrid/badge/?version=latest)](https://pydggrid.readthedocs.io/en/latest/?badge=latest)  
-[![PyPI version](https://badge.fury.io/py/pydggrid.svg)](https://badge.fury.io/py/pydggrid)
+[![Build Status](https://travis-ci.org/am2222/pydggrid.svg?branch=master)](https://travis-ci.org/am2222/pydggrid)  [![Documentation Status](https://readthedocs.org/projects/pydggrid/badge/?version=latest)](https://pydggrid.readthedocs.io/en/latest/?badge=latest)  [![PyPI version](https://badge.fury.io/py/pydggrid.svg)](https://badge.fury.io/py/pydggrid)
       
 PyDGGRID
 ==============
