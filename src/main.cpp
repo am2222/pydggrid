@@ -100,9 +100,6 @@ if(!isvalid()){
         values.push_back(j);
         return values;//py::cast(values);
 
-
-
-
 }
 
 
