@@ -8,9 +8,9 @@ environment:
     DISTUTILS_USE_SDK: 1
     MSSdk: 1
   matrix:
-  - PYTHON: 27
+#  - PYTHON: 27
   - PYTHON: 36
-  - CONDA: 27
+#  - CONDA: 27
   - CONDA: 36
 install:
 - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
@@ -32,10 +32,8 @@ build_script:
 - ps: |
     if ($env:PYTHON) {
       $env:boost_dir="C:\Libraries\boost_1_69_0\"
-      set "boost_dir=C:\Libraries\boost_1_69_0\"
       python setup.py sdist
-      set "boost_dir=C:\Libraries\boost_1_69_0\"
-      pip install --verbose dist\pydggrid-0.0.6.tar.gz
+      pip install  --global-option build_ext --global-option --compiler=msvc --verbose dist\pydggrid-0.0.7.tar.gz
     } else {
       conda build conda.recipe
       conda install --use-local pydggrid
