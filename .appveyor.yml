@@ -39,4 +39,4 @@ build_script:
       conda install --use-local pydggrid
     }
 test_script:
-- ps: python -m unittest discover
+#- ps: python -m unittest discover
