@@ -39,7 +39,7 @@ build_script:
     if ($env:PYTHON) {
       $env:boost_dir="C:\Libraries\boost_1_69_0\"
       python setup.py sdist
-      pip install  --global-option build_ext --global-option --compiler=msvc --verbose dist\pydggrid-0.0.7.tar.gz
+      pip install  --verbose dist\pydggrid-0.0.7.tar.gz
     } else {
       conda build conda.recipe
       conda install --use-local pydggrid
