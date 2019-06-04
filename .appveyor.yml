@@ -7,6 +7,7 @@ environment:
   global:
     DISTUTILS_USE_SDK: 1
     MSSdk: 1
+    boost_dir: C:\Libraries\boost_1_69_0\
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36
@@ -16,14 +17,7 @@ install:
 - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
 - ps: |
     if ($env:PYTHON) {
-      if ($env:PLATFORM -eq "x64") {
-      $env:PYTHON = "$env:PYTHON-x64"
-      call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
-      call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
-      }else{
-      call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
-
-      }
+      if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64"   }
       $env:PATH = "C:\Python$env:PYTHON\;C:\Python$env:PYTHON\Scripts\;$env:PATH"
     } elseif ($env:CONDA) {
       if ($env:CONDA -eq "27") { $env:CONDA = "" }
@@ -35,14 +29,16 @@ install:
       conda install -q conda-build
     }
 build_script:
-- ps: |
-    if ($env:PYTHON) {
-      $env:boost_dir="C:\Libraries\boost_1_69_0\"
-      python setup.py sdist
-      pip install  --verbose dist\pydggrid-0.0.7.tar.gz
-    } else {
-      conda build conda.recipe
-      conda install --use-local pydggrid
-    }
+- cmd: python setup.py sdist
+- cmd: pip install  --verbose dist\pydggrid-0.0.7.tar.gz
+#- ps: |
+#    if ($env:PYTHON) {
+#      $env:boost_dir="C:\Libraries\boost_1_69_0\"
+#      python setup.py sdist
+#      pip install  --verbose dist\pydggrid-0.0.7.tar.gz
+#    } else {
+#      conda build conda.recipe
+#      conda install --use-local pydggrid
+#    }
 test_script:
 #- ps: python -m unittest discover
