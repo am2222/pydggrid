@@ -25,7 +25,7 @@ install:
 
       }
       $env:PATH = "C:\Python$env:PYTHON\;C:\Python$env:PYTHON\Scripts\;$env:PATH"
-      pip install  --upgrade pip setuptools
+#      pip install --disable-pip-version-check --user --upgrade pip setuptools
     } elseif ($env:CONDA) {
       if ($env:CONDA -eq "27") { $env:CONDA = "" }
       if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
