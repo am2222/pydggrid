@@ -1,5 +1,7 @@
-version: '{build}'
+version: 1.0.'{build}'
 image: Visual Studio 2015
+only_commits:
+  message: /build/                # Start a new build if message contains 'build'
 platform:
 - x86
 - x64
@@ -11,13 +13,14 @@ environment:
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36
-    init_command: python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.7.tar.gz && python setup.py sdist && python setup.py bdist_wheel && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+    init_command: python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.7.tar.gz  && python setup.py sdist bdist_wheel && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
 
 #  - CONDA: 27
   - CONDA: 36
     init_command: conda build conda.recipe && conda install --use-local pydggrid
 install:
 - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
+- cmd: pip install wheel
 - ps: |
     if ($env:PYTHON) {
       if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64"   }
