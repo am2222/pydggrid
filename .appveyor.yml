@@ -1,4 +1,5 @@
-version: 1.0.'{build}'
+#version: 0.0.'{build}'
+version: 0.0.8
 image: Visual Studio 2015
 only_commits:
   message: /build/                # Start a new build if message contains 'build'
@@ -15,8 +16,8 @@ environment:
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36
-    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.7.tar.gz
-    deploy_command: pip install wheel && pip install twine && python setup.py sdist bdist_wheel && if not %PLATFORM%=='x86' del .\dist\pydggrid-0.0.8.tar.gz && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version%.tar.gz
+    deploy_command: pip install wheel && pip install twine && python setup.py sdist bdist_wheel && if not %PLATFORM%=='x86' del .\dist\pydggrid-%version%.tar.gz && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
 
 #  - CONDA: 27
   - CONDA: 36
