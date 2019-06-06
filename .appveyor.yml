@@ -11,8 +11,11 @@ environment:
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36
+    init_command: python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.7.tar.gz && python setup.py sdist bdist_wheel && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+
 #  - CONDA: 27
   - CONDA: 36
+    init_command: conda build conda.recipe && conda install --use-local pydggrid
 install:
 - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
 - ps: |
@@ -29,10 +32,17 @@ install:
       conda install -q conda-build
     }
 build_script:
-- cmd: python setup.py sdist
-- cmd: pip install  --verbose dist\pydggrid-0.0.7.tar.gz
+#- cmd: python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.7.tar.gz && python setup.py sdist bdist_wheel && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+#- cmd: pip install  --verbose dist\pydggrid-0.0.7.tar.gz
+#- cmd: python setup.py sdist bdist_wheel
+#- cmd: python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+#- cmd: am2222
+#- cmd: %pipy_password%
+#- cmd: IF "%env%"!="PYTHON" (call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86) ELSE (ECHO "probably a 64bit build")
+- cmd: '%init_command%'
+
 #- ps: |
-#    if ($env:PYTHON) {
+#    if (!$env:PYTHON) {
 #      $env:boost_dir="C:\Libraries\boost_1_69_0\"
 #      python setup.py sdist
 #      pip install  --verbose dist\pydggrid-0.0.7.tar.gz
@@ -41,4 +51,4 @@ build_script:
 #      conda install --use-local pydggrid
 #    }
 test_script:
-#- ps: python -m unittest discover
+- cmd: python -m unittest discover
