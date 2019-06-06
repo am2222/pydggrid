@@ -13,7 +13,7 @@ environment:
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36
-    init_command: python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.7.tar.gz  && python setup.py sdist bdist_wheel && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+    init_command: pip install wheel && python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.7.tar.gz  && python setup.py sdist bdist_wheel && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
 #  - CONDA: 27
   - CONDA: 36
     init_command: conda build conda.recipe && conda install --use-local pydggrid
