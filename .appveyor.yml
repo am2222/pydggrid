@@ -42,7 +42,6 @@ build_script:
 #- cmd: %pipy_password%
 #- cmd: IF "%env%"!="PYTHON" (call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86) ELSE (ECHO "probably a 64bit build")
 - cmd: '%init_command%'
-
 #- ps: |
 #    if (!$env:PYTHON) {
 #      $env:boost_dir="C:\Libraries\boost_1_69_0\"
