@@ -1,18 +1,16 @@
 version: 0.0.{build}
-#version: 0.0.8
 image: Visual Studio 2015
 only_commits:
   message: /build/                # Start a new build if message contains 'build'
 platform:
 - x86
-#  delete_deploy:
 - x64
-#  delete_deploy: if not %PLATFORM%=='x86' del .\dist\pydggrid-0.0.7.tar.gz
 environment:
   global:
     DISTUTILS_USE_SDK: 1
     MSSdk: 1
     boost_dir: C:\Libraries\boost_1_69_0\
+    version_ : 0.0.12
   matrix:
 #  - PYTHON: 27
   - PYTHON: 35
@@ -45,26 +43,8 @@ install:
       conda install -q conda-build
     }
 build_script:
-#- cmd: python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.7.tar.gz && python setup.py sdist bdist_wheel && python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
-#- cmd: pip install  --verbose dist\pydggrid-0.0.7.tar.gz
-#- cmd: python setup.py sdist bdist_wheel
-#- cmd: python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
-#- cmd: am2222
-#- cmd: %pipy_password%
-#- cmd: IF "%env%"!="PYTHON" (call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86) ELSE (ECHO "probably a 64bit build")
-- cmd: set version_=0.0.12
 - cmd: '%init_command%'
-#- ps: |
-#    if (!$env:PYTHON) {
-#      $env:boost_dir="C:\Libraries\boost_1_69_0\"
-#      python setup.py sdist
-#      pip install  --verbose dist\pydggrid-0.0.7.tar.gz
-#    } else {
-#      conda build conda.recipe
-#      conda install --use-local pydggrid
-#    }
 test_script:
 - cmd: python -m unittest discover
 deploy_script:
-- cmd: set version_=0.0.12
 - cmd: '%deploy_command%'
