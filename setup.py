@@ -6,7 +6,7 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 
-__version__ = '0.0.9'
+__version__ = '0.0.10'
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 istravis = os.environ.get('TRAVIS') == 'true'
