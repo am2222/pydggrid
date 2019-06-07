@@ -15,9 +15,15 @@ environment:
     boost_dir: C:\Libraries\boost_1_69_0\
   matrix:
 #  - PYTHON: 27
+  - PYTHON: 35
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.11.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-0.0.11.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
   - PYTHON: 36
-    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.10.tar.gz
-    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel && (if not %PLATFORM%==x86 del .\dist\pydggrid-0.0.10.tar.gz) & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.11.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-0.0.11.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+  - PYTHON: 37
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.11.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel && (if %PLATFORM%==x86 del .\dist\pydggrid-0.0.11.tar.gz) & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
 
 #  - CONDA: 27
   - CONDA: 36
