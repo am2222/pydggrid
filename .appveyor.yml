@@ -31,7 +31,6 @@ environment:
     deploy_command:
 install:
 - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
-- cmd: set version_=0.0.12
 - ps: |
     if ($env:PYTHON) {
       if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64"   }
@@ -53,6 +52,7 @@ build_script:
 #- cmd: am2222
 #- cmd: %pipy_password%
 #- cmd: IF "%env%"!="PYTHON" (call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86) ELSE (ECHO "probably a 64bit build")
+- cmd: set version_=0.0.12
 - cmd: '%init_command%'
 #- ps: |
 #    if (!$env:PYTHON) {
@@ -66,4 +66,5 @@ build_script:
 test_script:
 - cmd: python -m unittest discover
 deploy_script:
+- cmd: set version_=0.0.12
 - cmd: '%deploy_command%'
