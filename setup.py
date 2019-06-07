@@ -61,9 +61,11 @@ class get_pybind_include(object):
 
 
 
-
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+if sys.version_info > (3, 6):
+    with open("README.md", "r") as fh:
+        long_description = fh.read()
+else:
+    long_description="Python Dggrid readme for python 3.5"
 
 
 
