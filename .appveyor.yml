@@ -16,14 +16,14 @@ environment:
   matrix:
 #  - PYTHON: 27
   - PYTHON: 35
-    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.11.tar.gz
-    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-0.0.11.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-%version_%.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
   - PYTHON: 36
-    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.11.tar.gz
-    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-0.0.11.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-%version_%.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
   - PYTHON: 37
-    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-0.0.11.tar.gz
-    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel && (if %PLATFORM%==x86 del .\dist\pydggrid-0.0.11.tar.gz) & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel && (if %PLATFORM%==x86 del .\dist\pydggrid-%version_%.tar.gz) & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
 
 #  - CONDA: 27
   - CONDA: 36
@@ -31,6 +31,7 @@ environment:
     deploy_command:
 install:
 - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
+- cmd: set version_=0.0.12
 - ps: |
     if ($env:PYTHON) {
       if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64"   }
