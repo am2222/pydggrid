@@ -20,5 +20,5 @@ formats: all
 python:
   version: 3.7
   #  use_system_site_packages: true
-  extra_requirements:
-    - pybind11
+  install:
+    - requirements: docs/requirements.txt
