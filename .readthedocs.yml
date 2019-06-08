@@ -19,6 +19,6 @@ formats: all
 # Optionally set the version of Python and requirements required to build your docs
 python:
   version: 3.7
-  use_system_site_packages: true
+  #  use_system_site_packages: true
   extra_requirements:
     - pybind11
