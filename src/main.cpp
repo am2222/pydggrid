@@ -100,9 +100,6 @@ if(!isvalid()){
         values.push_back(j);
         return values;//py::cast(values);
 
-
-
-
 }
 
 
@@ -356,25 +353,22 @@ namespace py = pybind11;
 PYBIND11_MODULE(pydggrid, m) {
     m.doc() = R"pbdoc(
         DGGRID Python3 wrapper
-        -----------------------
 
         .. currentmodule:: pydggrid
-
         .. autosummary::
            :toctree: _generate
-
-           geo_to_seq
-
+           dgconstruct
+           geo_to_q2di
+           geo_to_q2dd
+           geo_to_projtri
     )pbdoc";
 
     m.def("geo_to_seq", &geo_to_seq, R"pbdoc(
         convert a lat lon point into seqnum
     )pbdoc",
      py::arg("in_lon_deg"), py::arg("in_lat_deg"));
-
-
     m.def("geo_to_q2di", &geo_to_q2di, R"pbdoc(
-        convert a lat lon point into q2di; returns an array with following structure [quad,i,j]
+        convert a lat lon point into q2di; returns an array with following structure quad,i,j
     )pbdoc",
      py::arg("in_lon_deg"), py::arg("in_lat_deg"));
 
@@ -401,7 +395,7 @@ PYBIND11_MODULE(pydggrid, m) {
 
 
     m.def("dgconstruct", &dgconstruct, R"pbdoc(
-        reintialize gdds object
+        reinitialize gdds object
     )pbdoc",
      py::arg("projection")="ISEA", py::arg("aperture")=3,
      py::arg("topology")= "HEXAGON", py::arg("azimuth_deg")=0,py::arg("res")=10, py::arg("pole_lon_deg")=11.25,

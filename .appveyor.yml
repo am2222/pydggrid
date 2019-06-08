@@ -1,5 +1,7 @@
-version: '{build}'
+version: 0.0.{build}
 image: Visual Studio 2015
+only_commits:
+  message: /build/                # Start a new build if message contains 'build'
 platform:
 - x86
 - x64
@@ -7,18 +9,30 @@ environment:
   global:
     DISTUTILS_USE_SDK: 1
     MSSdk: 1
+    boost_dir: C:\Libraries\boost_1_69_0\
+    version_ : 0.0.13
   matrix:
-  - PYTHON: 27
+#  - PYTHON: 27
+  - PYTHON: 35
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-%version_%.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
   - PYTHON: 36
-  - CONDA: 27
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-%version_%.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+  - PYTHON: 37
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel && (if %PLATFORM%==x86 del .\dist\pydggrid-%version_%.tar.gz) & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+
+#  - CONDA: 27
   - CONDA: 36
+    init_command: conda build conda.recipe && conda install --use-local pydggrid
+    deploy_command:
 install:
 - cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
 - ps: |
     if ($env:PYTHON) {
-      if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64" }
+      if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64"   }
       $env:PATH = "C:\Python$env:PYTHON\;C:\Python$env:PYTHON\Scripts\;$env:PATH"
-      pip install --disable-pip-version-check --user --upgrade pip setuptools
     } elseif ($env:CONDA) {
       if ($env:CONDA -eq "27") { $env:CONDA = "" }
       if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
@@ -29,17 +43,8 @@ install:
       conda install -q conda-build
     }
 build_script:
-- ps: |
-    if ($env:PYTHON) {
-
-      set "boost_dir=C:\Libraries\boost_1_69_0\"
-      python setup.py install
-      python setup.py sdist
-      set "boost_dir=C:\Libraries\boost_1_69_0\"
-      pip install --verbose dist\pydggrid-0.0.5.tar.gz
-    } else {
-      conda build conda.recipe
-      conda install --use-local pydggrid
-    }
+- cmd: '%init_command%'
 test_script:
-- ps: python -m unittest discover
+- cmd: python -m unittest discover
+deploy_script:
+- cmd: '%deploy_command%'

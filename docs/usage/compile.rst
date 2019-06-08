@@ -1,9 +1,8 @@
-PyDGGRID Installation
+Build PyDGGRID From Source
 ============================
-.. note:: this library needs 'Boost' library for compile. so make sure you have installed boost C++ library before installing.
-The first thing many people want to know is, “how do I build Boost?” The good news is that often, there's nothing to build. To install boost follow flowing steps
+To Build PyDGGRID from source follow these steps:
 
-Install on Linux
+Linux
 -------------------------
 - Install boost on linux
 
@@ -18,15 +17,18 @@ After installing boost; set `boost_dir` variable in terminal/command prompt wind
 
 `expot boost_dir=/home/usr/include/boost/`
 
-- Install PyDGGRID from pip
+- clone this repository
 
-Then simply use pip to install this library
+- `pip install ./pydggrid`
 
-`pip install pydggrid`
+ or you can easily call
+
+- `python setup.py install`
 
 
-Install on Windows
+Windows
 -------------------------
+.. note:: You need Build Tools for Visual Studio to be able to compile it from source. so Install it from this link `https://visualstudio.microsoft.com/downloads/`
 
 - Install boost
 
@@ -40,8 +42,13 @@ then extract it in a folder. and it is done. After installing boost;
 
 `set "boost_dir=C:/Boost/include/"`
 
-Then simply use pip to install this library
+- clone this repository
 
-`pip install pydggrid`
+- `pip install ./pydggrid`
+
+ or you can easily call
+
+- `python setup.py install`
+
 
 
