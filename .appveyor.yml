@@ -13,15 +13,15 @@ environment:
     version_ : 0.0.13
   matrix:
 #  - PYTHON: 27
-  - PYTHON: 35
-    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
-    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-%version_%.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
   - PYTHON: 36
     init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
     deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-%version_%.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
   - PYTHON: 37
     init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
     deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel && (if %PLATFORM%==x86 del .\dist\pydggrid-%version_%.tar.gz) & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
+  - PYTHON: 35
+    init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
+    deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-%version_%.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
 
 #  - CONDA: 27
   - CONDA: 36
