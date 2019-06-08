@@ -1,7 +1,8 @@
 PyDGGRID Installation
 ============================
+
 .. note:: this library needs 'Boost' library for compile. so make sure you have installed boost C++ library before installing.
-The first thing many people want to know is, “how do I build Boost?” The good news is that often, there's nothing to build. To install boost follow flowing steps
+The first thing many people want to know is, “how do I build Boost?” The good news is that often, there's nothing to build. To install boost follow these steps.
 
 Install on Linux
 -------------------------

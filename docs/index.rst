@@ -15,8 +15,6 @@ Contents:
    usage/installation
    usage/compile
    pydggrid
-.. toctree::
-   :maxdepth: 1
    usage/releasehistory
 
 

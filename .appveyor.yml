@@ -10,7 +10,7 @@ environment:
     DISTUTILS_USE_SDK: 1
     MSSdk: 1
     boost_dir: C:\Libraries\boost_1_69_0\
-    version_ : 0.0.13
+    version_ : 0.0.14
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36

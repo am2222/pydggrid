@@ -352,7 +352,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(pydggrid, m) {
     m.doc() = R"pbdoc(
-        DGGRID Python3 wrapper
+        DGGRID Python wrapper
 
         .. currentmodule:: pydggrid
         .. autosummary::

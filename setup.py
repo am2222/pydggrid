@@ -5,8 +5,9 @@ from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
+from sys import platform
 
-__version__ = '0.0.13'
+__version__ = '0.0.14'
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 istravis = os.environ.get('TRAVIS') == 'true'
@@ -19,7 +20,10 @@ if boost_directory_value is not None or istravis:
     sys.stderr.write( "Using '%s=%s' environment variable!\n" % (
             boost_directory, boost_directory_value ) )
 else:
-    raise RuntimeError('Please specify Boost directory. It must be defined as '
+    if platform == "linux" or platform == "linux2":
+        boost_directory_value='/home/usr/include/boost/'
+    else:
+        raise RuntimeError('Please specify Boost directory. It must be defined as '
                        'boost_dir=/home/usr/include/boost/ pip install pydggrid on Linux systems '
                        'and set "boost_dir=C:/Boost/include/" && pip install. The boost version must be higher than boost 1.70.0')
 # os.environ["CC"] = "g++-4.7"
