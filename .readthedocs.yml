@@ -19,9 +19,6 @@ formats: all
 # Optionally set the version of Python and requirements required to build your docs
 python:
   version: 3.7
-  install:
-    - method: pip
-      path: .
-      extra_requirements:
-        - pybind11
-    - system_packages: true
+  use_system_site_packages: true
+  extra_requirements:
+    - pybind11
