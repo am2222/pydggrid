@@ -6,7 +6,7 @@ from setuptools.command.build_ext import build_ext
 import sys
 import setuptools
 
-__version__ = '0.0.12'
+__version__ = '0.0.13'
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 istravis = os.environ.get('TRAVIS') == 'true'
@@ -65,8 +65,8 @@ if sys.version_info > (3, 6):
     with open("README.md", "r") as fh:
         long_description = fh.read()
 else:
-    long_description="Python Dggrid readme for python 3.5"
-
+    with open("README.txt", "r") as fh:
+        long_description = fh.read()
 
 
 ext_modules = [
