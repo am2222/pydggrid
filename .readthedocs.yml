@@ -21,7 +21,7 @@ python:
   version: 3.7
   install:
     - method: pip
-        path: .
-        extra_requirements:
-          - pybind11
+      path: .
+      extra_requirements:
+        - pybind11
     - system_packages: true
