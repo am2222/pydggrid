@@ -60,13 +60,12 @@ class get_pybind_include(object):
         return pybind11.get_include(self.user)
 
 
-# print(sys.version,"is version of python")
-# if sys.version_info > (3, 6):
-with open("README.md", "r",encoding='utf-8') as fh:
-    long_description = fh.read()
-# else:
-#     with open("README.txt", "r",encoding='utf-8') as fh:
-#         long_description = fh.read()
+print(sys.version,"is version of python")
+if sys.version_info > (3, 6):
+    with open("README.md", "r",encoding='utf-8') as fh:
+        long_description = fh.read()
+else:
+        long_description =""
 
 
 ext_modules = [
