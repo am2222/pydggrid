@@ -61,11 +61,11 @@ class get_pybind_include(object):
 
 
 
-if sys.version_info > (3, 6):
+if sys.version_info > (3, 5):
     with open("README.md", "r") as fh:
         long_description = fh.read()
 else:
-    with open("README.txt", "r") as fh:
+    with open("README.txt", "r",encoding='utf-8') as fh:
         long_description = fh.read()
 
 
