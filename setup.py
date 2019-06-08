@@ -60,8 +60,8 @@ class get_pybind_include(object):
         return pybind11.get_include(self.user)
 
 
-
-if sys.version_info > (3, 5):
+print(sys.version,"is version of python")
+if sys.version_info > (3, 6):
     with open("README.md", "r",encoding='utf-8') as fh:
         long_description = fh.read()
 else:
