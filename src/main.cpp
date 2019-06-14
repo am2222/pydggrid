@@ -358,9 +358,13 @@ PYBIND11_MODULE(pydggrid, m) {
         .. autosummary::
            :toctree: _generate
            dgconstruct
+           geo_to_seq
            geo_to_q2di
            geo_to_q2dd
            geo_to_projtri
+           geo_to_plane
+           geo_to_geo
+
     )pbdoc";
 
     m.def("geo_to_seq", &geo_to_seq, R"pbdoc(

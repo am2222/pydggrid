@@ -12,6 +12,5 @@ The author often tweets about new features and releases of Requests.
 
 Follow `@khooodam <https://twitter.com/khooodam>`_ for updates.
 
-Release and Version History
-===========================
+
 .. include:: ../../HISTORY.md
