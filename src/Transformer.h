@@ -5,7 +5,8 @@
 #ifndef UNTITLED1_TRANSFORMER_H
 #define UNTITLED1_TRANSFORMER_H
 
-
+#include <iostream>
+#include <memory>
 #include "DgParams.h"
 #include "lib/DgLocation.h"
 #include "GridThing.h"
