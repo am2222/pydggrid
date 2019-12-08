@@ -202,8 +202,6 @@ class BuildExt(build_ext):
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
             opts.append(cpp_flag(self.compiler))
-            # Add Wno-unknown-pragmas
-            # pragma warning(suppress : 4996)
             opts.append('-Wno-unknown-pragmas')
 
 
@@ -215,7 +213,7 @@ class BuildExt(build_ext):
             # opts.append('/w')
             opts.append('/Y-')
             # opts.append('/MT')
-            opts.append('/c')
+            # opts.append('/c')
             opts.append('/D_USE_MATH_DEFINES')
             opts.append('/wd4996')
         for ext in self.extensions:

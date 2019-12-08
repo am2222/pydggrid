@@ -9,7 +9,7 @@ environment:
   global:
     DISTUTILS_USE_SDK: 1
     MSSdk: 1
-    version_ : 0.0.15
+    version_ : 0.0.16
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36
