@@ -116,14 +116,16 @@ else:
     include_directory=os.path.join(vcpkg_root, 'installed', triplet, 'include')
     print(sys.prefix)
 
+sources = []
+sources += glob.glob(os.path.join(dir_path, 'src', 'lib',  '*.cpp'))
+sources += glob.glob(os.path.join(dir_path, 'src',  '*.cpp'))
+sources += glob.glob(os.path.join(dir_path, 'src', 'lib',  '*.c'))
+
+# print(sources)
 ext_modules = [
     Extension(
         'pydggrid',
-        [os.path.join(dir_path, 'src', 'main.cpp')]
-        + glob.glob(os.path.join(dir_path, 'src', 'lib',  '*.cpp'))
-        + glob.glob(os.path.join(dir_path, 'src',  '*.cpp'))
-        + glob.glob(os.path.join(dir_path, 'src', 'lib',  '*.c')),
-
+        sources,
         include_dirs=[
             os.path.join(dir_path, 'src', 'lib', ),
             os.path.join(dir_path, 'src' ),
