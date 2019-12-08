@@ -29,7 +29,7 @@ before_install:
   - sudo apt-get install python-pip python-dev build-essential
   - sudo apt-get install python3-setuptools
   - sudo apt-get install python3-pip
-  - sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
+  - sudo add-apt-repository ppa:ubuntugis/ppa -y && sudo apt-get update
   - sudo apt-get update
   - sudo apt-get install gdal-bin
   - sudo apt-get install libgdal-dev
