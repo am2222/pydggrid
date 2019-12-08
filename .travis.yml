@@ -26,34 +26,20 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install gcc-5 -y
   - sudo apt-get install g++-5 -y
-  - sudo apt-get install libboost-all-dev -y
-#  - sudo apt-get install libboost-geometry-utils-perl -y
   - sudo apt-get install python-pip python-dev build-essential
   - sudo apt-get install python3-setuptools
   - sudo apt-get install python3-pip
-  - wget https://sourceforge.net/projects/boost/files/boost/1.70.0/boost_1_70_0.tar.gz -P $HOME
-  - cd $HOME
-  - tar -xzvf boost_1_70_0.tar.gz >/dev/null
-#  - cd boost_1_70_0
-#  - sudo ./bootstrap.sh --prefix=/usr/local --with-libraries=all
-#  - sudo ./b2 install
-#  - sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/boost.conf'
-#  - sudo ldconfig
-#  - cd ../../
+  - sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
+  - sudo apt-get update
+  - sudo apt-get install gdal-bin
+  - sudo apt-get install libgdal-dev
+  - sudo apt-get install shapelib
+  - sudo apt-get install libshp-dev
   - sudo pip install --user --upgrade pip virtualenv
-  - sudo pip install --user setuptools
-#  - sudo virtualenv -p python3 venv
-#  - source venv/bin/activate
-#  - sudo pip install pybind11
   - sudo python3 -m pip install --upgrade pip
   - sudo python3 -m pip install pybind11
-#  - cd src
-#  - ls
-#  - cd ../
 
 
-    # Inform user that Boost 1.55 was successfully installed
-#    echo "Boost 1.55 was successfully installed."
 
 
 install:
