@@ -16,18 +16,27 @@ A wrapper for DGGRID in python. Currently based on last DGGRID version (6.4) fro
 Changes
 ------------
 - 0.0.16
+
 [ ] DGGRID is updated to version 7.3
+
 [ ] Some bugs fixed
+
 [ ] Richard Barnes's dglib class is decomposed in order to upgrade DGGRID 
 
 - 0.0.15
+
 [ ] Not released
+
 [ ] DGGRID is updated to version 7.1 (https://github.com/sahrk/DGGRID)
+
 [ ] Removed `Boost` Geometry suppert to use `GDAL` support since main `DGGRID` library started to use `GDAL` library
+
 [ ] Added `VCPKG` support for windows version
+
 [ ] Cleaned up setup process
 
 - 0.0.14
+
 [] Added different system build environments 
 
 

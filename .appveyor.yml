@@ -9,8 +9,7 @@ environment:
   global:
     DISTUTILS_USE_SDK: 1
     MSSdk: 1
-    boost_dir: C:\Libraries\boost_1_69_0\
-    version_ : 0.0.14
+    version_ : 0.0.16
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36
@@ -23,12 +22,18 @@ environment:
     init_command:  python setup.py sdist && pip install  --verbose dist\pydggrid-%version_%.tar.gz
     deploy_command:  pip install wheel && pip install twine && python setup.py sdist bdist_wheel &&  del .\dist\pydggrid-%version_%.tar.gz & python -m twine upload dist/* -u %pipy_username% -p %pipy_password%
 
-#  - CONDA: 27
   - CONDA: 36
     init_command: conda build conda.recipe && conda install --use-local pydggrid
     deploy_command:
 install:
-- cmd: '"%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%'
+- cmd: |
+    cd "C:\Tools\vcpkg"
+    git pull
+    .\bootstrap-vcpkg.bat
+    .\vcpkg install gdal:%PLATFORM%-windows gdal:%PLATFORM%-windows
+    cd %appveyor_build_folder%
+    "%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%
+
 - ps: |
     if ($env:PYTHON) {
       if ($env:PLATFORM -eq "x64") { $env:PYTHON = "$env:PYTHON-x64"   }
