@@ -12,27 +12,63 @@ A wrapper for DGGRID in python. Currently based on last DGGRID version (6.4) fro
   <img src="https://github.com/am2222/pydggrid/blob/master/docs/L6kmP.jpg?raw=true" alt="SPyDGGRID"/>
 </p>
 
+
+Changes
+------------
+- 0.0.16
+[ ] DGGRID is updated to version 7.3
+[ ] Some bugs fixed
+[ ] Richard Barnes's dglib class is decomposed in order to upgrade DGGRID 
+
+- 0.0.15
+[ ] Not released
+[ ] DGGRID is updated to version 7.1 (https://github.com/sahrk/DGGRID)
+[ ] Removed `Boost` Geometry suppert to use `GDAL` support since main `DGGRID` library started to use `GDAL` library
+[ ] Added `VCPKG` support for windows version
+[ ] Cleaned up setup process
+
+- 0.0.14
+[] Added different system build environments 
+
+
 Installation
 ------------
 
-Note: this library needs 'Boost' library for compile. so make sure you have installed boost C++ library before installing.
-The first thing many people want to know is, “how do I build Boost?” The good news is that often, there's nothing to build. 
-To install boost follow folowing steps
-- Install boost on linux
+Note: The main `DGGRID` library needs 'GDAL' library to compile. so make sure you have installed GDAL C++ library before installing. To installing GDAL on linux is pretty straightforward. For windows you can use `vcpkg` to compile and install it. The process of installing and using `vcpkg` on windows can be found on its github (https://github.com/microsoft/vcpkg/)
+
+- Install GDAL on linux
 ```
-$ sudo apt install libboost-dev
-$ sudo apt install libboost-all-dev
+sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
+sudo apt-get update
+sudo apt-get install gdal-bin
+sudo apt-get install libgdal-dev
 ```
 
-- Install boost on windows
+- Install GDAL on windows
 
-Download latest version of boost from folowing link
-`https://www.boost.org/users/download/`
-then extract it in a folder. and it is done. After installing boost; set `boost_dir` variable in terminal/command prompt windows. 
+Prerequisites:
+```
+Windows 10, 8.1, 7, Linux, or MacOS
+Visual Studio 2015 Update 3 or newer (on Windows)
+Git
+```
+To get started:
+```
+> git clone https://github.com/Microsoft/vcpkg.git
+> cd vcpkg
 
-Linux `expot boost_dir=/home/usr/include/boost/`
+PS> .\bootstrap-vcpkg.bat
+```
+then
 
-Windows `set "boost_dir=C:/Boost/include/"`
+```
+PS> .\vcpkg integrate install
+```
+Install GDAL packages with
+```
+PS> .\vcpkg install gdal:x64-windows shapelib::x64-windows
+```
+NOTE: The GDAL version **must** match with your python compiled version. So if you have a x86 python use `vcpkg install gdal:x86-windows`, othewise use `vcpkg install gdal:x64-windows`
 
 Then simply use pip to install this library
 
@@ -42,8 +78,7 @@ Then simply use pip to install this library
 Build From source
 ------------
 **On Unix (Linux, OS X)**
- - install boost
- - set `boost_dir` environment variable
+ - install GDAL, shapelib
  - clone this repository
  - `pip install ./pydggrid`
  
@@ -53,8 +88,7 @@ Build From source
  
 **On Windows**
  - You need Build Tools for Visual Studio to be able to compile it from source. so Install it from this link `https://visualstudio.microsoft.com/downloads/`
- - install boost
- - set `boost_dir` environment variable
+ - install GDAL, shapelib
  - clone this repository
  - `pip install ./pydggrid`
  
@@ -68,7 +102,7 @@ In order to use this library use following example. (more updates are comming on
 #import librarry
 import pydggrid as m
 #Construct a dggs object
-m.dgconstruct();
+m.dgconstruct()
 #getting Q2di index for a (lat,long) point
 m.geo_to_q2di(50,50)
 #[4, 71, 211]
@@ -85,8 +119,8 @@ m.geo_to_projtri(50,50)
 TODO
 --------------------------
 - Supporting All DGGRID functions
-- Adding Boost Geometry Support
-
+- Adding GDAL export Geometry Support
+- Support GridGeneration using DGGRID 
 
 Building the documentation
 --------------------------

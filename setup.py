@@ -13,40 +13,44 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 istravis = os.environ.get('TRAVIS') == 'true'
 
 
-boost_directory = 'boost_dir'
-boost_directory_value = os.environ.get( boost_directory, None )
+from os.path import expanduser
 
-if boost_directory_value is not None or istravis:
-    sys.stderr.write( "Using '%s=%s' environment variable!\n" % (
-            boost_directory, boost_directory_value ) )
-else:
-    if platform == "linux" or platform == "linux2":
-        boost_directory_value='/home/usr/include/boost/'
+
+arch_x64=sys.maxsize > 0x100000000
+triplet='x64-windows'
+gdal_lib_name='gdal'
+if not arch_x64:
+    triplet='x86-windows'
+
+
+def pip_install(package_name):
+    subprocess.call(
+        [sys.executable, '-m', 'pip', 'install', package_name]
+    )
+
+gdal_exist = False
+vcpkg_root = None
+def get_vcpkg_dir_for_win():
+    home = expanduser("~")
+    file=os.path.join(home, 'AppData', 'Local', 'vcpkg', 'vcpkg.path.txt')
+    if os.path.isfile(file):
+        f = open(file, "r")
+        firstline=f.readline()
+        print('vcpkg directory might be in',firstline)
+        if os.path.isdir(firstline):
+            vcpkg_root=os.path.normpath(firstline)
+            vcpkg_libs=os.path.join(vcpkg_root, 'installed', triplet, 'lib')
+            if os.path.isfile(os.path.join(vcpkg_libs, 'gdal.lib')):
+                gdal_exist=True
+                print("setup could find gdal library in ",os.path.join(vcpkg_libs, 'gdal.lib'))
+                return vcpkg_root
+            else:
+                raise RuntimeError('Can not find gdal.lib in:'+vcpkg_libs+' you have a '+triplet+' Python version so try to install gdal using following command: vcpkg install gdal: '+triplet)
+        else:
+           raise RuntimeError('Can not find gdal.lib in:'+vcpkg_libs+' you have a '+triplet+' Python version so try to install gdal using following command: vcpkg install gdal: '+triplet)
+            
     else:
-        raise RuntimeError('Please specify Boost directory. It must be defined as '
-                       'boost_dir=/home/usr/include/boost/ pip install pydggrid on Linux systems '
-                       'and set "boost_dir=C:/Boost/include/" && pip install. The boost version must be higher than boost 1.70.0')
-# os.environ["CC"] = "g++-4.7"
-# os.environ["CXX"] = "g++-4.7"
-# os.environ["THEANO_FLAGS"] = 'gcc.cxxflags="-D_hypot=hypot"'
-
-
-
-from setuptools.command.install import install
-def get_boost_include():
-    if istravis:
-        return '/home/travis/boost_1_70_0/'
-    else:
-        # if os.name=='nt':
-        #     #     running on windows
-        #     root = 'C:/Boost/include/'
-        #     dirlist = [item for item in os.listdir(root) if os.path.isdir(os.path.join(root, item))]
-        #     for d in dirlist:
-        #         return os.path.join(os.path.dirname(root),d)
-        return boost_directory_value
-
-
-    return ''
+        raise RuntimeError('This package can be installed easily using vcpkg on windows. So try to install vcpkg on windows and then install gdal library using vcpkg install gdal:x86-windows or vcpkg install gdal:x64-windows. Don\'t forget to call vcpkg integrate install as well.' )
 
 
 class get_pybind_include(object):
@@ -63,6 +67,31 @@ class get_pybind_include(object):
         import pybind11
         return pybind11.get_include(self.user)
 
+import os, fnmatch
+def find(pattern, path):
+    result = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            if fnmatch.fnmatch(name, pattern):
+                result.append(os.path.join(root, name))
+    return result
+
+windows_dll_list = []
+def get_vcpkg_dll_lists():
+    list = ['expat.dll','geos.dll','geos_c.dll','libcharset.dll','libcurl.dll','LIBEAY32.dll','libiconv.dll','libpng16.dll','libpq.dll','libxml2.dll','lzma.dll','openjp2.dll','sqlite3.dll','SSLEAY32.dll','webp.dll','zlib1.dll','shp.dll']
+
+    vcpkg_bin=os.path.join(vcpkg_root, 'installed', triplet, 'bin')
+    gdal_dll=find('gdal*.dll', vcpkg_bin)
+    if len(gdal_dll)!=1:
+        return False
+    else:
+        list.append(gdal_dll[0])
+        for dll in list:
+            if os.path.isfile(os.path.join(vcpkg_bin, dll)):
+                windows_dll_list.append(os.path.join(vcpkg_bin, dll))
+            else:
+                print("Cannot find  ",dll)
+
 
 print(sys.version,"is version of python")
 if sys.version_info > (3, 6):
@@ -72,30 +101,44 @@ else:
         long_description =""
 
 
+
+lib_directory=''
+include_directory=''
+if platform == "linux" or platform == "linux2":
+    if os.path.isdir('/usr/include/gdal'):
+        include_directory='/usr/include/gdal'
+        gdal_lib_name='gdal'
+else:
+    gdal_lib_name='gdal'
+    vcpkg_root=get_vcpkg_dir_for_win()
+    get_vcpkg_dll_lists()
+    lib_directory=os.path.join(vcpkg_root, 'installed', triplet, 'lib')
+    include_directory=os.path.join(vcpkg_root, 'installed', triplet, 'include')
+    print(sys.prefix)
+
 ext_modules = [
     Extension(
         'pydggrid',
         [os.path.join(dir_path, 'src', 'main.cpp')]
-        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'dggrid', '*.cpp'))
-        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'dglib', 'include', '*.cpp'))
-        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include', '*.c'))
-        + glob.glob(os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include', '*.cpp'))
-        + glob.glob(os.path.join(dir_path, 'src', 'lib', '*.cpp'))
-        ,
+        + glob.glob(os.path.join(dir_path, 'src', 'lib',  '*.cpp'))
+        + glob.glob(os.path.join(dir_path, 'src',  '*.cpp'))
+        + glob.glob(os.path.join(dir_path, 'src', 'lib',  '*.c')),
+
         include_dirs=[
-            # os.path.join('src','dggrid'),
-            os.path.join(dir_path, 'src', 'lib', 'shapelib', 'include'),
-            os.path.join(dir_path, 'src', 'lib', 'proj4lib', 'include'),
+            os.path.join(dir_path, 'src', 'lib', ),
+            os.path.join(dir_path, 'src' ),
             # FIXME: install issue for venv
             '/usr/local/include/python3.6',
-            # ,
-            # 'E:/Personal/Lab/DGGRID/boost_1_70_0',
+            '/usr/include',
             # Path to pybind11 headers
             get_pybind_include(),
-            get_boost_include(),
+            include_directory,
             get_pybind_include(user=True)
         ],
-        library_dirs=[],
+        libraries =[gdal_lib_name,'gdal','shp'],
+        library_dirs =[lib_directory,'/usr/lib'],
+	    #runtime_library_dirs = ['/usr/lib'],
+	    # extra_link_args=['-lgdal','-lshp','shp.lib','gdal.lib'],
         language='c++'
     ),
 ]
@@ -132,6 +175,7 @@ def cpp_flag(compiler):
 
 
 import distutils.ccompiler
+import subprocess
 
 compiler_name = distutils.ccompiler.get_default_compiler()
 
@@ -153,7 +197,6 @@ class BuildExt(build_ext):
         # if compiler_name=='mingw32':
         # print (compiler_name)
 
-
         if ct == 'unix':
             opts.append('-DVERSION_INFO="%s"' % self.distribution.get_version())
             opts.append(cpp_flag(self.compiler))
@@ -161,15 +204,22 @@ class BuildExt(build_ext):
             # pragma warning(suppress : 4996)
             opts.append('-Wno-unknown-pragmas')
 
+
             if has_flag(self.compiler, '-fvisibility=hidden'):
                 opts.append('-fvisibility=hidden')
         elif ct == 'msvc':
             opts.append('/DVERSION_INFO=\\"%s\\"' % self.distribution.get_version())
             opts.append('-D_hypot=hypot')
-            opts.append('/w')
+            # opts.append('/w')
             opts.append('/Y-')
+            # opts.append('/MT')
+            opts.append('/c')
+            opts.append('/D_USE_MATH_DEFINES')
+            opts.append('/wd4996')
         for ext in self.extensions:
             ext.extra_compile_args = opts
+        #opts.append('-L/usr/lib -lgdal -l/usr/lib/libshp.so -llibshp.so -lshp')
+
         build_ext.build_extensions(self)
 
 
@@ -180,10 +230,12 @@ setup(
     author_email='asd56yu@gmail.com',
     url='https://github.com/am2222/pydggrid',
     description='Python wrapper for DGGRID',
+    data_files=[('',windows_dll_list)],
     long_description=long_description,
     long_description_content_type="text/markdown",
     ext_modules=ext_modules,
     install_requires=['pybind11>=2.2'],
+    setup_requires=['pybind11>=2.2'],
     cmdclass={'build_ext': BuildExt},
     zip_safe=False,
     classifiers=[
