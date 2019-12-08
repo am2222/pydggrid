@@ -6,7 +6,7 @@
 PyDGGRID
 ==============
 
-A wrapper for DGGRID in python. Currently based on last DGGRID version (6.4) from Kevin Sahr.
+A wrapper for DGGRID in python. Currently based on last DGGRID from Kevin Sahr.
 
 <p align="center">
   <img src="https://github.com/am2222/pydggrid/blob/master/docs/L6kmP.jpg?raw=true" alt="SPyDGGRID"/>
@@ -16,28 +16,19 @@ A wrapper for DGGRID in python. Currently based on last DGGRID version (6.4) fro
 Changes
 ------------
 - 0.0.16
-
-[ ] DGGRID is updated to version 7.3
-
-[ ] Some bugs fixed
-
-[ ] Richard Barnes's dglib class is decomposed in order to upgrade DGGRID 
+- [x] DGGRID is updated to version 7.3
+- [x] Some bugs fixed
+- [x] Richard Barnes's dglib class is decomposed in order to upgrade DGGRID 
 
 - 0.0.15
-
-[ ] Not released
-
-[ ] DGGRID is updated to version 7.1 (https://github.com/sahrk/DGGRID)
-
-[ ] Removed `Boost` Geometry suppert to use `GDAL` support since main `DGGRID` library started to use `GDAL` library
-
-[ ] Added `VCPKG` support for windows version
-
-[ ] Cleaned up setup process
+- [x] Not released
+- [x] DGGRID is updated to version 7.1 (https://github.com/sahrk/DGGRID)
+- [x] Removed `Boost` Geometry suppert to use `GDAL` support since main `DGGRID` library started to use `GDAL` library
+- [x] Added `VCPKG` support for windows version
+- [x] Cleaned up setup process
 
 - 0.0.14
-
-[] Added different system build environments 
+- [x] Added different system build environments 
 
 
 Installation
@@ -45,14 +36,12 @@ Installation
 
 Note: The main `DGGRID` library needs 'GDAL' library to compile. so make sure you have installed GDAL C++ library before installing. To installing GDAL on linux is pretty straightforward. For windows you can use `vcpkg` to compile and install it. The process of installing and using `vcpkg` on windows can be found on its github (https://github.com/microsoft/vcpkg/)
 
-- Install GDAL and Shapelib on linux
+- Install GDAL on linux
 ```
 sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
 sudo apt-get update
 sudo apt-get install gdal-bin
 sudo apt-get install libgdal-dev
-sudo apt-get install shapelib
-sudo apt-get install libshp-dev
 ```
 
 - Install GDAL on windows
@@ -84,6 +73,7 @@ NOTE: The GDAL version **must** match with your python compiled version. So if y
 Then simply use pip to install this library
 
 `pip install pydggrid`
+
 
 Build From source
 ------------
@@ -128,9 +118,9 @@ m.geo_to_projtri(50,50)
 
 TODO
 --------------------------
-- Supporting All DGGRID functions
-- Adding GDAL export Geometry Support
-- Support GridGeneration using DGGRID 
+- [ ]Supporting All DGGRID functions
+- [ ]Adding GDAL export Geometry Support
+- [ ]Support GridGeneration using DGGRID 
 
 Building the documentation
 --------------------------

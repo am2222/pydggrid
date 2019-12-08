@@ -9,7 +9,7 @@ environment:
   global:
     DISTUTILS_USE_SDK: 1
     MSSdk: 1
-    version_ : 0.0.16
+    version_ : 0.0.15
   matrix:
 #  - PYTHON: 27
   - PYTHON: 36
@@ -30,7 +30,7 @@ install:
     cd "C:\Tools\vcpkg"
     git pull
     .\bootstrap-vcpkg.bat
-    .\vcpkg install gdal:%PLATFORM%-windows gdal:%PLATFORM%-windows
+    .\vcpkg install gdal:%PLATFORM%-windows shapelib:%PLATFORM%-windows
     cd %appveyor_build_folder%
     "%VS140COMNTOOLS%\..\..\VC\vcvarsall.bat" %PLATFORM%
 
