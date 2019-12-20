@@ -1,7 +1,8 @@
 
 [![Build Status](https://travis-ci.org/am2222/pydggrid.svg?branch=master)](https://travis-ci.org/am2222/pydggrid)  [![Documentation Status](https://readthedocs.org/projects/pydggrid/badge/?version=latest)](https://pydggrid.readthedocs.io/en/latest/?badge=latest)  [![Build status](https://ci.appveyor.com/api/projects/status/pldf8fuw9bd5mvsm?svg=true)](https://ci.appveyor.com/project/am2222/pydggrid)   [![PyPI version](https://badge.fury.io/py/pydggrid.svg)](https://badge.fury.io/py/pydggrid)
 
-      
+ [![DOI](https://zenodo.org/badge/175857508.svg)](https://zenodo.org/badge/latestdoi/175857508)
+     
       
 PyDGGRID
 ==============
@@ -12,6 +13,10 @@ A wrapper for DGGRID in python. Currently based on last DGGRID from Kevin Sahr.
   <img src="https://github.com/am2222/pydggrid/blob/master/docs/L6kmP.jpg?raw=true" alt="SPyDGGRID"/>
 </p>
 
+
+Documentations
+--------------
+[![Build Status](https://travis-ci.org/am2222/pydggrid.svg?branch=master)](https://travis-ci.org/am2222/pydggrid)  [![Documentation Status](https://readthedocs.org/projects/pydggrid/badge/?version=latest)]
 
 Changes
 ------------
