@@ -11,23 +11,22 @@ Note: The main `DGGRID` library needs 'GDAL' library to compile. so make sure yo
 
 ```
 sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
-
 sudo apt-get update
-
 sudo apt-get install gdal-bin
-
 sudo apt-get install libgdal-dev
 
 ```
 
 - Install GDAL on windows
 
-Prerequisites:
+Prerequisites
+
 ```
 Windows 10, 8.1, 7, Linux, or MacOS
 Visual Studio 2015 Update 3 or newer (on Windows)
 Git
 ```
+
 To get started:
 ```
 > git clone https://github.com/Microsoft/vcpkg.git
@@ -53,6 +52,7 @@ Then simply use pip to install this library
 
 Build From source
 ------------
+
 **On Unix (Linux, OS X)**
  - install GDAL, shapelib
  - clone this repository
