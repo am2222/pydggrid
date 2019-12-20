@@ -16,7 +16,7 @@ A wrapper for DGGRID in python. Currently based on last DGGRID from Kevin Sahr.
 
 Documentations
 --------------
-[![Build Status](https://travis-ci.org/am2222/pydggrid.svg?branch=master)](https://travis-ci.org/am2222/pydggrid)  [![Documentation Status](https://readthedocs.org/projects/pydggrid/badge/?version=latest)]
+[![Documentation Status](https://readthedocs.org/projects/pydggrid/badge/?version=latest)]
 
 Changes
 ------------
