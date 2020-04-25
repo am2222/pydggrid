@@ -61,7 +61,7 @@ class DgOutLocTextFile : public DgOutputStream, public DgOutLocFile {
                         DgReportLevel failLevel = DgBase::Fatal);
     //FIXME: this part is changed from pure abstract function in order to be compiled
     //by Majid @am2222
-    virtual void setFormatStr(void) {};
+    virtual void setFormatStr(void) = 0;
 
       std::string formatStr_;
 

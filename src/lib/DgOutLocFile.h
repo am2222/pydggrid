@@ -82,20 +82,29 @@ class DgOutLocFile : public DgBase {
       // abstract virtual methods
       //FIXME: this part is changed from pure abstract function in order to be compiled
       //by Majid @am2222
-        virtual DgOutLocFile& insert(DgLocation& loc,
-                                     const string* label = NULL) {
-            return *this;
-        };
+        // virtual DgOutLocFile& insert(DgLocation& loc,
+        //                              const string* label = NULL) {
+        //     return *this;
+        // };
 
-        virtual DgOutLocFile& insert(DgLocVector& vec, const string* label = NULL,
-                                     const DgLocation* cent = NULL) {
-            return *this;
-        };
+        // virtual DgOutLocFile& insert(DgLocVector& vec, const string* label = NULL,
+        //                              const DgLocation* cent = NULL) {
+        //     return *this;
+        // };
 
-        virtual DgOutLocFile& insert(DgPolygon& poly, const string* label = NULL,
-                                     const DgLocation* cent = NULL) {
-            return *this;
-        };
+        // virtual DgOutLocFile& insert(DgPolygon& poly, const string* label = NULL,
+        //                              const DgLocation* cent = NULL) {
+        //     return *this;
+        // };
+             // abstract virtual methods
+      virtual DgOutLocFile& insert (DgLocation& loc, 
+                                const string* label = NULL) = 0;
+
+      virtual DgOutLocFile& insert (DgLocVector& vec, const string* label = NULL, 
+                                const DgLocation* cent = NULL) = 0;
+
+      virtual DgOutLocFile& insert (DgPolygon& poly, const string* label = NULL, 
+                                const DgLocation* cent = NULL) = 0;
    protected:
 
       DgOutLocFile (const string& fileName, 

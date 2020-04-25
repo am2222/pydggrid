@@ -6,3 +6,5 @@ MANIFEST
 _build
 _generate
 build
+.eggs
+pydggrid.egg-info
