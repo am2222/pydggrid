@@ -10,7 +10,7 @@ Twitter
 -------
 The author often tweets about new features and releases of Requests.
 
-Follow `@khooodam <https://twitter.com/khooodam>`_ for updates.
+Follow `@Majid <https://twitter.com/MajidGIS>`_ for updates.
 
 
 .. include:: ../../HISTORY.md
